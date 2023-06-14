@@ -5,7 +5,7 @@ Create a branch from the main branch with the name of the project you are workin
 
 Important: Avoid pushing your code directly to the main branch. If you do so, your code will be removed, and you will need to push it again to your branch. Instead, always work on your own branch.
 
-Before starting the development process, make sure to thoroughly understand the project's API documentation. You can access it by clicking here, Dowell API Services.
+Before starting the development process, make sure to thoroughly understand the project's API documentation. You can access it by clicking here, [Dowell API Services](https://github.com/orgs/DoWellUXLab/).
 
 By following these steps, you will ensure that you work on your dedicated branch, understand the API documentation, and collaborate effectively on the project.
 
