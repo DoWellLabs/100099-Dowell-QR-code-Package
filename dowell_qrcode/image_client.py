@@ -18,7 +18,7 @@ class ImageClient(Client):
         :param image_name (str): name of image file to be converted to QR Code. Defaults to the name of the image file in the path provided.
         You can pass in a custom name for the image file to be converted to QR Code.
         :param qrcode_type (str): type of QR Code to be generated (Leave as default for now)
-        :param verbose (bool): if True, return the response object for th created QR code from the API
+        :param verbose (bool): if True, return the response object for the created QR code from the API
         :param kwargs: additional data to be sent to the API
             :kwarg quantity (int): number of QR Codes to be generated
 

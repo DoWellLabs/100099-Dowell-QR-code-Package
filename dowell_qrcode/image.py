@@ -241,7 +241,7 @@ class Image:
 
     def makebinary(self, invert: bool = False):
         """
-        Convert image to binary
+        Convert image to binary (black and white)
         
         :param invert (bool): whether to invert binary code
         """

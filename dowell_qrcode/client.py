@@ -41,6 +41,8 @@ ALLOWED_UPDATE_FIELDS = {
     "is_active": bool,
 }
 
+AVAILABLE_QRCODE_TYPES = ('Link',)
+
 
 def get_new_user_agent() -> str:
     """Get a new user agent and save it to config.json"""
@@ -70,7 +72,7 @@ class Client:
     @property
     def available_qrcode_types(self):
         """Return a tuple of available qrcode types"""
-        return ('Link',)
+        return AVAILABLE_QRCODE_TYPES
 
     
     @staticmethod
@@ -122,9 +124,11 @@ class Client:
         Generate QR Code for object of `qrcode_type`
         
         :param obj (str | Any): object for which QR Code is to be generated. If `qrcode_type` is `Link`, then `obj` should be a valid url.
-        :param verbose (bool): if True, return the response object for th created QR code from the API
+        :param verbose (bool): if True, return the response object for the created QR code from the API
         :param kwargs: additional data to be sent to the API
             :kwarg quantity (int): number of QR Codes to be generated
+
+            :kwarg logo (str): path to logo to be added to QR Code
 
             :kwarg logo_size (int): size of logo to be added to QR Code
 
