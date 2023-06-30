@@ -1,17 +1,21 @@
+"""Module exceptions."""
 
-class QRCodeGenerationError(Exception):
+class ClientError(Exception):
+    """Raised when an error occurs during API request"""
+
+class QRCodeGenerationError(ClientError):
     """Raised when an error occurs during QR Code generation"""
 
 
-class QRCodeUpdateError(Exception):
+class QRCodeUpdateError(ClientError):
     """Raised when an error occurs during QR Code update"""
 
 
-class QRCodeNotFoundError(Exception):
+class QRCodeNotFoundError(ClientError):
     """Raised when a QR Code is not found"""
 
 
-class QRCodeRetrievalError(Exception):
+class QRCodeRetrievalError(ClientError):
     """Raised when an error occurs during QR Code retrieval"""
 
 

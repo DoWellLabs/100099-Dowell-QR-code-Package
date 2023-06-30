@@ -1,3 +1,7 @@
+"""
+Contains class for handling QR Code generation, update and retrieval for images using Dowell QR Code API
+"""
+
 from typing import Dict, Any
 
 from .exceptions import QRCodeGenerationError, NoFaceDetected

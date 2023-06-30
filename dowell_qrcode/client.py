@@ -1,3 +1,7 @@
+"""
+Contains base class for the Dowell QR Code Generator API Client
+"""
+
 import requests
 import random
 from bs4_web_scraper.utils import generate_random_user_agents
@@ -5,13 +9,13 @@ from bs4_web_scraper import scraper
 from typing import Dict, Any, List
 
 
-from .exceptions import ( 
-                            QRCodeGenerationError, QRCodeUpdateError, 
+from .exceptions import (   ClientError, QRCodeGenerationError, QRCodeUpdateError, 
                             QRCodeNotFoundError, QRCodeRetrievalError, NotSupportedError,
                          )
 
 
 api_base_url = 'https://100099.pythonanywhere.com/api/v2'
+api_status_url = f"{api_base_url}/server-status/"
 api_get_url = f"{api_base_url}/qr-code/"
 api_put_url = f"{api_base_url}/update-qr-code/"
 actual_image_url_base = "http://67.217.61.253/uploadfiles/qrcode-download"
@@ -31,8 +35,8 @@ ALLOWED_CREATE_FIELDS = {
 
 
 ALLOWED_UPDATE_FIELDS = {
-    "created_by": str,
     "company_id": str,
+    "created_by": str,
     "link": str,
     "qrcode_color": str,
     "logo_size": int,
@@ -69,6 +73,22 @@ class Client:
         self.session_.headers.update({'User-Agent': user_agent})
 
 
+    @classmethod
+    def get_status(cls):
+        """
+        Get the status of Dowell QR Code Generator API
+
+        :return (dict): dictionary containing the status of the API and response code or text if API is unreachable
+        """
+        resp = cls.session_.get(api_status_url)
+        if resp.ok:
+            status_resp = resp.json()
+            status_resp.update({'status_code': resp.status_code})
+        else:
+            status_resp = {'info': resp.text, 'status_code': resp.status_code}
+        return status_resp
+
+
     @property
     def available_qrcode_types(self):
         """Return a tuple of available qrcode types"""
@@ -86,7 +106,7 @@ class Client:
         """
         for key, value in payload.items():
             if key not in validate_with.keys():
-                raise KeyError(f"Invalid field {key}. Allowed fields are {validate_with.keys()}")
+                raise KeyError(f"Invalid field `{key}`. Allowed fields are {list(validate_with.keys())}")
             if not isinstance(value, validate_with[key]):
                 raise TypeError(f"Invalid type for field `{key}`. Expected {validate_with[key]} but got {type(value)}")
         return True
@@ -102,7 +122,7 @@ class Client:
 
         payload = {
             "quantity": data.get('quantity', 1),
-            "created_by": self.username,
+            "created_by": data.get("created_by", self.username),
             "company_id": self.user_id,
             "qrcode_type": data.get('qrcode_type', 'Link'),
             "link": data.get('link', 'https://google.com/'),
@@ -121,7 +141,7 @@ class Client:
 
     def generate_qrcode(self, obj: str | Any, product_name: str = None, qrcode_type: str = "Link", verbose: bool = False, **kwargs):
         """
-        Generate QR Code for object of `qrcode_type`
+        Generate QR Code for object of `qrcode_type`. QR code is activated by default.
         
         :param obj (str | Any): object for which QR Code is to be generated. If `qrcode_type` is `Link`, then `obj` should be a valid url.
         :param verbose (bool): if True, return the response object for the created QR code from the API
@@ -137,17 +157,17 @@ class Client:
             :kwarg description (str): description of QR Code to be generated
 
         :return: a tuple of the QR Code image url and the QR Code id or a list of such tuples if quantity is greater than 1
-
+        :raises NotSupportedError: if `qrcode_type` is not supported.
+        :raises QrCodeGenerationError: if QR Code generation fails
         """
         if qrcode_type not in self.available_qrcode_types:
-            raise ValueError(f"Invalid QR Code type. Available types are {self.available_qrcode_types}")
-        if qrcode_type != "Link":
-            raise NotSupportedError(f"QR Code type {qrcode_type} is not supported yet")
+            raise NotSupportedError(f"Invalid QR Code type. Available types are {self.available_qrcode_types}")
 
         data = {
             "link": obj, 
             "product_name": product_name or '',
             "qrcode_type": qrcode_type,
+            "is_active": True,
         }
             
         files = []
@@ -177,7 +197,7 @@ class Client:
             else:
                 return (response_data["qrcode_image_url"], response_data["qrcode_id"])
         else:
-            raise QRCodeGenerationError(f"Error generating QR Code: {response.text}")
+            raise QRCodeGenerationError(f"Error generating QR Code: reason: {response.text}")
 
 
     @staticmethod
@@ -208,21 +228,23 @@ class Client:
 
     def update_qrcode(self, qrcode_id: str, qrcode_link: str, data: Dict[str, Any], verbose: bool = False):
         """
-        Updates QR Code with data provided
+        Updates QR Code with data provided. Occasionally, updates may take a while to reflect.
 
         :param qrcode_id (str): `qrcode_id` of QR Code to be updated
-        :param qrcode_link (str): `link` of the QR Code to be updated
+        :param qrcode_link (str): new `link` or previous `link` of the QR Code to be updated.
+        This must always be provided.
         :param data (Dict[str, Any]): data to be updated
         :param verbose (bool): if True, return the response object instead of the image url
 
         :return: link to new QR Code image by default.
+        :raises: QRCodeUpdateError if the API returns an error
         """
-        data.update({"link": qrcode_link, "created_by": self.username, "company_id": self.user_id})
+        data.update({"link": qrcode_link, "company_id": self.user_id, "created_by": data.get('created_by', self.user_id)})
         self._validate_payload(data, validate_with=ALLOWED_UPDATE_FIELDS)
         response = self.session_.put(f"{api_put_url}/{qrcode_id}/", data=data)
 
         if not response.ok:
-            raise QRCodeUpdateError(f"Error updating QR Code: {response.text}")
+            raise QRCodeUpdateError(f"Error updating QR Code: reason: {response.text}")
         response_data =  response.json()['response']
         response_data = self._correct_response_data(response_data)
         if verbose is True:
@@ -232,16 +254,19 @@ class Client:
 
     def get_qrcode(self, qrcode_id: str, verbose: bool = False):
         """
-        Get QR code image for qrcode_id
+        Get QR code image for `qrcode_id`
 
         :param qrcode_id (str): id of QR Code to be retrieved
         :param verbose (bool): if True, return the response object instead of the image url
+
+        :return: link to QR Code image by default
+        :raises QRCodeNotFoundError: if QR Code with `qrcode_id` is not found
         """
         response = self.session_.get(f"{api_put_url}/{qrcode_id}/")
         if not response.ok:
             if response.status_code == 404:
                 raise QRCodeNotFoundError(f"QR Code with id {qrcode_id} not found")
-            raise QRCodeRetrievalError(f"Error getting QR Code: {response.text}")
+            raise QRCodeRetrievalError(f"Error getting QR Code: reason: {response.text}")
         response_data = response.json()['response'][0]
         response_data = self._correct_response_data(response_data)
         if verbose is True:
@@ -250,13 +275,52 @@ class Client:
 
 
     def get_qrcodes(self):
-        """Get all QR codes associated with user"""
+        """
+        Get all QR codes associated with `user_id`
+        
+        :return (List[Dict[str, Any]]): list of QR Codes
+        :raises QRCodeRetrievalError: if there is an error retrieving QR Codes
+        """
         response = self.session_.get(api_get_url, params={'company_id': self.user_id})
         if not response.ok:
-            raise QRCodeRetrievalError(f"Error getting QR Codes: {response.text}")
+            raise QRCodeRetrievalError(f"Error getting QR Codes: reason: {response.text}")
         response_data = response.json()['response']['data']
         response_data = self._correct_response_data(response_data)
         return response_data
+
+
+    def activate_qrcode(self, qrcode_id: str):
+        """
+        Activate QR Code with `qrcode_id`
+
+        :param qrcode_id (str): id of QR Code to be activated
+        :raises ClientError: if QR Code is not activated
+        """
+        try:
+            qrcode = self.get_qrcode(qrcode_id, verbose=True)
+            activated_qrcode = self.update_qrcode(qrcode_id, qrcode['link'], {'is_active': True}, verbose=True)
+            if activated_qrcode['is_active'] != True:
+                raise ClientError(f"Error activating QR Code: reason: `is_active` is still False")
+        except ClientError as e:
+            raise ClientError(e)
+        return None
+
+
+    def deactivate_qrcode(self, qrcode_id: str):
+        """
+        Deactivate QR Code with `qrcode_id`
+        
+        :param qrcode_id (str): id of QR Code to be deactivated
+        :raises ClientError: if QR Code is not deactivated
+        """
+        try:
+            qrcode = self.get_qrcode(qrcode_id, verbose=True)
+            deactivated_qrcode = self.update_qrcode(qrcode_id, qrcode['link'], {'is_active': False}, verbose=True)
+            if deactivated_qrcode['is_active'] != False:
+                raise ClientError(f"Error deactivating QR Code: reason: `is_active` is still True")
+        except ClientError as e:
+            raise ClientError(e)
+        return None
 
 
     @staticmethod
@@ -265,7 +329,7 @@ class Client:
         Download QR Code image from url
 
         :params qrcode_url (str): url to QR Code image
-        :params save_to (str): path to save downloaded image to
+        :params save_to (str): path to directory where the downloaded image will be saved
         :return: bs4_web_scraper.FileHandler object of downloaded image
 
         To get the image file itself, use the `file` attribute of the returned object

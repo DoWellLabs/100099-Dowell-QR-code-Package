@@ -1,3 +1,7 @@
+"""
+Contains custom image object that allows for face detection and other modifications using OpenCV
+"""
+
 from typing import List, Tuple
 import cv2
 import os
@@ -256,7 +260,7 @@ class Image:
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-    def draw_rectangle(self, x_top_left: int, y_top_left: int, width: int, height: int, rgb: tuple = (255, 0, 0)):
+    def draw_rectangle(self, x_top_left: int, y_top_left: int, width: int, height: int, rgb: tuple = (255, 0, 0), thickness: int = 2):
         """
         Draw rectangle on image
         
@@ -265,8 +269,9 @@ class Image:
         :param width (int): width of rectangle
         :param height (int): height of rectangle
         :param rgb (tuple): color of rectangle
+        :param thickness (int): thickness of rectangle
         """
-        cv2.rectangle(self.data, (x_top_left, y_top_left), (x_top_left + width, y_top_left + height), rgb, 2)
+        cv2.rectangle(self.data, (x_top_left, y_top_left), (x_top_left + width, y_top_left + height), rgb, thickness)
 
     def find_faces(self, scale_factor: float = 1.1, min_neighbors: int = 5, min_size: tuple = (30, 30)):
         """

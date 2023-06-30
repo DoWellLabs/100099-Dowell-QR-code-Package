@@ -1,6 +1,6 @@
 # Dowell QR Code Client
 
-This is a python client for the Dowell QR Code API.
+This is a python client for the Dowell QR Code API. Uses API version 2.
 
 [Pypi]('#')
 
@@ -117,7 +117,7 @@ print(updated_qrcode)
 
 ```
 
-> You cannot update the qrcode `link`, `created_by`, `company_id` and `logo_url`. If you try to update, it will be ignored.
+> Note! You cannot update the qrcode `company_id` and `logo_url` fields. If you try to update, it will be ignored.
 For more info on fields you can update:
 
 ```python
@@ -127,22 +127,52 @@ print(client.ALLOWED_UPDATE_FIELDS)
 
 ```
 
-### Deleting QR Code
+### Downloading QR Code Image
+
+To download the QR code image, use the following code:
+
+```python
+import dowell_qrcode
+
+client = dowell_qrcode.Client(username='Username', user_id="UserID")
+qrcode_image_url = client.get_qrcode(qrcode_id='QrCodeID')
+
+# returns a FileHandler object
+file_handler = client.download_qrcode(qrcode_url=qrcode_image_url, save_to='path/to/dir')
+
+print(file_handler.file_path)
+
+```
+
+### Deactivating a QR Code
 
 QR codes cannot be deleted. They can only be deactivated. To deactivate a QR code, use the following code:
 
 ```python
 
-qrcode = client.get_qrcode(qrcode_id='QrCodeID', verbose=True)
-qrcode_link = qrcode['link']
-updated_qrcode = client.update_qrcode(qrcode_id='QrCodeID', qrcode_link=qrcode_link, data={'is_active': False}, verbose=True)
-print(updated_qrcode)
+client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client.deactivate_qrcode(qrcode_id='QrCodeID')
+
+assert client.get_qrcode(qrcode_id='QrCodeID')['is_active'] == False
 
 ```
 
-### The Image Class
+### Activating a QR Code
 
-The Image class is used to create a custom image object that can be passed to the ImageClient to generate QR codes for images. It has the following basic attributes and methods:
+To activate a QR code, use the following code:
+
+```python
+
+client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client.activate_qrcode(qrcode_id='QrCodeID')
+
+assert client.get_qrcode(qrcode_id='QrCodeID')['is_active'] == True
+
+```
+
+### The `Image` Class
+
+The `Image` class is used to create a custom image object that can be passed to the ImageClient to generate QR codes for images. It also allows for face detection in the image. Listed below are most of the objects attributes and methods:
 
 ```python
 
@@ -175,17 +205,17 @@ image_data = image.bytes
 # Check if the image has a human face
 has_face = image.has_face
 
-# Get the image face count
+# Get the number of faces in the image
 face_count = image.face_count
 
-# Get the image face locations
+# Get the coordinates of the faces in the image
 face_locations = image.find_faces()
 
-# markout the faces in the image
-image.markout_faces(face_locations)
+# markout the faces in the image with a green color
+image.markout_faces(face_locations, color=(0, 255, 0))
 
 # Save the image
-image.save()
+image.save(...)
 
 # Convert image to grayscale
 image.grayscale()
@@ -203,6 +233,9 @@ image.rotate(...)
 image.resize(...)
 # etc
 
+# draw a rectangle on a specific part of the image
+image.draw_rectangle(...)
+
 # Check if image is color, grayscale or black and white
 is_color = image.is_color()
 is_grayscale = image.is_grayscale()
@@ -210,5 +243,21 @@ is_binary = image.is_binary()
 
 # Check if image is valid
 is_valid = image.is_valid()
+
+```
+
+### Get API version and status
+
+To get the API version and status, use the following code:
+
+```python
+import dowell_qrcode
+
+# Get API version
+print(dowell_qrcode.api_version)
+
+# Get API status
+status = dowell_qrcode.get_api_status()
+print(status)
 
 ```
