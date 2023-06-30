@@ -59,7 +59,7 @@ image_client = dowell_qrcode.ImageClient(username='Username', user_id="UserID")
 
 # Create a custom image object using the Image class
 image = dowell_qrcode.Image('path/to/image.png')
-result = image_client.generate_qrcode(image=image, product_name='My image')
+result = image_client.generate_qrcode(image=image, image_name='My image')
 
 # Alternatively, you can pass the path to the image file directly
 result = image_client.generate_qrcode(image='path/to/image.png', image_name='My image')
@@ -153,7 +153,7 @@ QR codes cannot be deleted. They can only be deactivated. To deactivate a QR cod
 client = dowell_qrcode.Client(username='Username', user_id="UserID")
 client.deactivate_qrcode(qrcode_id='QrCodeID')
 
-assert client.get_qrcode(qrcode_id='QrCodeID')['is_active'] == False
+assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == False
 
 ```
 
@@ -166,7 +166,7 @@ To activate a QR code, use the following code:
 client = dowell_qrcode.Client(username='Username', user_id="UserID")
 client.activate_qrcode(qrcode_id='QrCodeID')
 
-assert client.get_qrcode(qrcode_id='QrCodeID')['is_active'] == True
+assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == True
 
 ```
 
