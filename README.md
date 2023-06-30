@@ -1,6 +1,6 @@
-# Dowell QR Code Client
+# Dowell QR Code Generator Client
 
-This is a python client for the Dowell QR Code API. Uses API version 2.
+This is a python client for the Dowell QR Code Generator API. Uses API version 2.
 
 [Pypi]('#')
 
