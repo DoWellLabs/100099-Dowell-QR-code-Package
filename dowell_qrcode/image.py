@@ -5,6 +5,7 @@ Contains custom image object that allows for face detection and other modificati
 from typing import List, Tuple
 import cv2
 import os
+import numpy as np
 
 
 ALLOWED_IMAGE_FORMATS = ('.png', '.jpeg', '.jpg', '.bmp', '.tiff', '.tif', '.gif', '.pbm', '.pgm', '.ppm', '.webp')
@@ -19,14 +20,17 @@ def check_image_ok(path: str):
     :raises ValueError: if path provided is invalid
     :return: absolute path to image file
     """
-    if not os.path.exists(path):
-        raise ValueError('Invalid path provided. Path does not exist')
-    _, extension = os.path.splitext(path)
+    if not isinstance(path, str):
+        raise TypeError("Invalid type for path. Path must be a string")
 
+    _, extension = os.path.splitext(path)
     if not extension:
         raise ValueError("Invalid path provided. No extension found")
     if extension.lower() not in ALLOWED_IMAGE_FORMATS:
         raise ValueError(f"Invalid image format. Allowed formats are {ALLOWED_IMAGE_FORMATS}")
+
+    if not os.path.exists(path):
+        raise ValueError('Invalid path provided. Path does not exist')
     return os.path.abspath(path)
         
         
@@ -67,7 +71,7 @@ class Image:
     @property
     def format(self):
         """Image file format"""
-        return os.path.splitext(self.path)[1].removeprefix('.')
+        return os.path.splitext(self.path)[1].removeprefix('.').lower()
 
     @property
     def data(self):
@@ -75,8 +79,8 @@ class Image:
         return self._data
 
     @data.setter
-    def data(self, value: cv2.Mat):
-        if not isinstance(value, cv2.Mat):
+    def data(self, value: cv2.Mat | np.ndarray):
+        if not isinstance(value, (cv2.Mat, np.ndarray)):
             raise TypeError("Invalid type for data")
         self._data = value
 
@@ -121,12 +125,22 @@ class Image:
     @property
     def height(self):
         """Height of image"""
-        return self.data.shape[0]
+        return int(self.data.shape[0])
     
     @property
     def width(self):
         """Width of image"""
-        return self.data.shape[1]
+        return int(self.data.shape[1])
+
+    @property
+    def area(self):
+        """Area of image"""
+        return self.width * self.height
+    
+    @property
+    def aspect_ratio(self):
+        """Aspect ratio of image"""
+        return self.width // self.height
 
     @property
     def size(self):
@@ -136,6 +150,7 @@ class Image:
     @property
     def channels(self):
         """Number of channels in image"""
+        print("Shape: ", self.data.shape)
         return self.data.shape[2]
 
     @property
@@ -178,36 +193,48 @@ class Image:
         """Check if image is valid binary"""
         return self.is_valid and self.is_binary
 
+
     def resize(self, width: int = None, height: int = None, interpolation: int = cv2.INTER_AREA):
         """
-        Resize image
+        Resize image. Aspect ratio is maintained if only one of width or height is provided.
         
         :param width (int): width of resized image
         :param height (int): height of resized image
         :param interpolation (int): interpolation method to use
+
+        >>> img = Image('path/to/image.jpg')
+        >>> img.resize(width=500)
+        >>> assert img.width == 500
         """
         if width is None and height is None:
             raise ValueError("Either width or height must be provided")
+
         if width is None:
-            ratio = height / self.height
-            width = int(self.width * ratio)
+            width = int(height / self.aspect_ratio)
         elif height is None:
-            ratio = width / self.width
-            height = int(self.height * ratio)
-        self.data = cv2.resize(self.data, (width, height), interpolation=interpolation)
+            height = int(width / self.aspect_ratio)
+        self.data = cv2.resize(self.data, dsize=(width, height), interpolation=interpolation)
+        return None
+
 
     def rotate(self, angle: int, center: tuple = None, scale: float = 1.0):
         """
         Rotate image
         
-        :param angle (int): angle of rotation
-        :param center (tuple): center of rotation
-        :param scale (float): scale of rotation
+        :param angle (int): angle of rotation. Positive values mean clockwise rotation and negative values mean counter clockwise rotation.
+        :param center (tuple): center of rotation. `center` will serve as the pivot point for the rotation. Default is center of image.
+        :param scale (float): Optional parameter to adjust the scale of the image during rotation. Default is 1.0.
+
+        >>> img = Image('path/to/image.jpg')
+        >>> img.rotate(90) # rotate image 90 degrees clockwise
+        >>> img.rotate(-90) # rotate image 90 degrees counter clockwise
         """
         if center is None:
             center = (self.width / 2, self.height / 2)
         matrix = cv2.getRotationMatrix2D(center, angle, scale)
-        self.data = cv2.warpAffine(self.data, matrix, (self.width, self.height))
+        self.data = cv2.warpAffine(self.data, matrix, dsize=(self.width, self.height))
+        return None
+
 
     def flip(self, direction: int):
         """
@@ -218,30 +245,50 @@ class Image:
         * For normal vertical flipping (flipping upside-down) use integer 0.
         * For horizontal flipping (flipping side-ways) use integers greater than 0.
         * For simultaneous vertical and horizontal flipping use integers less than 0.
+
+        >>> img = Image('path/to/image.jpg')
+        >>> img.flip(0) # flip image upside-down
+        >>> img.flip(1) # flip image side-ways
+        >>> img.flip(-1) # flip image upside-down and side-ways
         """
         self.data = cv2.flip(self.data, direction)
+        return None
 
-    def crop(self, x_top_left: int, y_top_left: int, width: int, height: int):
+
+    def crop(self, x_top_left: int, y_top_left: int, width: int, height: int, resize: bool = True):
         """
         Crop image
         
-        :param x_top_left (int): x coordinate of top left corner of crop
-        :param y_top_left (int): y coordinate of top left corner of crop
+        :param x_top_left (int): x coordinate of top left corner of crop of the region of interest
+        :param y_top_left (int): y coordinate of top left corner of crop of the region of interest
         :param width (int): width of crop
         :param height (int): height of crop
+        :param resize (bool): whether to resize the cropped image to original image size. Default is True.
+
+        >>> img = Image('path/to/image.jpg')
+        >>> x_top_left, y_top_left = 100, 500
+        >>> img.crop(x_top_left, y_top_left, width=200, height=100) # crop image from top left corner with width 200 and height 100
         """
-        self.data = self.data[y_top_left:y_top_left + height, x_top_left:x_top_left + width]
+        cropped_data = self.data[y_top_left:y_top_left + height, x_top_left:x_top_left + width].copy()
+        if resize is True:
+            self.data = cv2.resize(cropped_data, dsize=(self.width, self.height), interpolation=cv2.INTER_AREA)
+        else:
+            self.data = cropped_data
+        return None
+
 
     def grayscale(self, equalize: bool = False):
         """
-        Convert image to grayscale
+        Convert color image to grayscale
         
         :param equalize (bool): whether to equalize the histogram of the grayscale image.
         """
         if equalize is True:
-            self.data = self.eqgray
+            self.data = self.eqgray.shape
         else:
-            self.data = self.gray
+            self.data = self.gray.shape
+        return None
+
 
     def makebinary(self, invert: bool = False):
         """
@@ -253,31 +300,36 @@ class Image:
             self.data = self.binary_inv
         else:
             self.data = self.binary
+        return None
+
 
     def show(self):
-        """Display image"""
+        """Display image in a window"""
         cv2.imshow(self.path, self.data)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
 
     def draw_rectangle(self, x_top_left: int, y_top_left: int, width: int, height: int, rgb: tuple = (255, 0, 0), thickness: int = 2):
         """
         Draw rectangle on image
         
-        :param x_top_left (int): x coordinate of top left corner of rectangle
-        :param y_top_left (int): y coordinate of top left corner of rectangle
+        :param x_top_left (int): x coordinate of top left corner of rectangle on image
+        :param y_top_left (int): y coordinate of top left corner of rectangle on image
         :param width (int): width of rectangle
         :param height (int): height of rectangle
         :param rgb (tuple): color of rectangle
         :param thickness (int): thickness of rectangle
         """
-        cv2.rectangle(self.data, (x_top_left, y_top_left), (x_top_left + width, y_top_left + height), rgb, thickness)
+        cv2.rectangle(self.data, pt1=(x_top_left, y_top_left), pt2=(x_top_left + width, y_top_left + height), color=rgb, thickness=thickness)
 
-    def find_faces(self, scale_factor: float = 1.1, min_neighbors: int = 5, min_size: tuple = (30, 30)):
+
+    def find_faces(self, scale_factor: float = 1.1, min_neighbors: int = 5, min_size: tuple = (30, 30)) -> np.ndarray:
         """
         Looks for human faces in image and returns coordinates of faces found
 
-        :param scale_factor (float): adjusts the image scale factor
+        :param scale_factor (float): adjusts the image scale factor. A smaller scale factor, such as 1.1, will result in more image pyramid levels and more precise face detection, 
+        but it may also increase the processing time. A larger scale factor, such as 1.5, will have fewer pyramid levels and may lead to faster but potentially less accurate detection.
         :param min_neighbors (int): specifies the minimum number of neighbors required for a region to be considered a face
         :param min_size (tuple): specifies the minimum number of neighbors required for a region to be considered a face     
         :return: list of tuples containing coordinates of faces found if any
@@ -287,6 +339,7 @@ class Image:
                                                                 minNeighbors=min_neighbors, minSize=min_size
                                                                 )
         return face_coordinates
+
 
     @property
     def has_faces(self):
@@ -298,6 +351,7 @@ class Image:
         """Number of human faces in image"""
         return len(self.find_faces())
 
+
     def markout_faces(self, face_coordinates: List[Tuple[int, int, int, int]], color: tuple = (0, 255, 0)):
         """
         Mark out human faces found in image
@@ -307,6 +361,8 @@ class Image:
         """
         for (x, y, w, h) in face_coordinates:
             self.draw_rectangle(x, y, w, h, rgb=color)
+        return None
+
 
     @property
     def compression_algo(self):

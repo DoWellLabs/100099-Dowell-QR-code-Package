@@ -3,8 +3,9 @@ Contains class for handling QR Code generation, update and retrieval for images 
 """
 
 from typing import Dict, Any
+import json
 
-from .exceptions import QRCodeGenerationError, NoFaceDetected
+from .exceptions import QRCodeGenerationError, NoFaceDetected, NotSupportedError
 from .client import Client, api_get_url
 from .image import Image
 
@@ -35,7 +36,7 @@ class ImageClient(Client):
         :return: a tuple of the QR Code image url and the QR Code id or a list of such tuples if quantity is greater than 1
         """
         if qrcode_type not in self.available_qrcode_types:
-            raise ValueError(f"Invalid QR Code type. Available types are {self.available_qrcode_types}")
+            raise NotSupportedError(f"Invalid QR Code type. Available types are {self.available_qrcode_types}")
 
         if isinstance(image, str):
             image_path = image.strip().replace('\\', '/')
@@ -81,6 +82,6 @@ class ImageClient(Client):
         # and then update the QR code `link` field with the `logo_url` returned in the response from the API
         logo_url = response_data['logo_url']
         qrcode_id = response_data['qrcode_id']
-        qrcode_image_url = self.update_qrcode(qrcode_id, qrcode_link=logo_url, data={})
+        qrcode_image_url = self.update_qrcode(qrcode_id, data={"link": logo_url})
         return qrcode_image_url, qrcode_id
 

@@ -2,13 +2,10 @@
 
 This is a python client for the Dowell QR Code Generator API. Uses API version 2.
 
-[Pypi]('#')
+## Setting up in local environment
 
-## Installation
-
-```bash
-pip install dowell-qrcode
-```
+* Clone the repository to your local machine
+* Import the `dowell_qrcode` module from the local repository
 
 ## Usage
 
@@ -39,6 +36,7 @@ To get a more detailed result set the `verbose` argument to True.
 
 result = client.generate_qrcode(obj='https://www.google.com', product_name='Google Link', qrcode_type='Link', verbose=True)
 print(result)
+client.activate_qrcode(qrcode_id=result['qrcode_id'])
 
 ```
 
@@ -106,13 +104,11 @@ To update the details of an already existing QR code, use the following code:
 
 ```python
 
-qrcode = client.get_qrcode(qrcode_id='QrCodeID', verbose=True)
-qrcode_link = qrcode['link']
-update_data = {
+update_payload = {
     "qrcode_color": '#ff0000', 
     "description": 'This is a new description'
 }
-updated_qrcode = client.update_qrcode(qrcode_id='QrCodeID', qrcode_link=qrcode_link, data=update_data, verbose=True)
+updated_qrcode = client.update_qrcode(qrcode_id='QrCodeID', data=update_payload, verbose=True)
 print(updated_qrcode)
 
 ```
@@ -141,6 +137,7 @@ qrcode_image_url = client.get_qrcode(qrcode_id='QrCodeID')
 file_handler = client.download_qrcode(qrcode_url=qrcode_image_url, save_to='path/to/dir')
 
 print(file_handler.file_path)
+file_handler.close_file() # Always close the file handler after use
 
 ```
 
@@ -168,6 +165,16 @@ client.activate_qrcode(qrcode_id='QrCodeID')
 
 assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == True
 
+```
+
+### End User Session with the API
+
+To end a user session with the API, use the following code:
+
+```python
+
+client.endsession()
+    
 ```
 
 ### The `Image` Class
@@ -198,6 +205,12 @@ image_width = image.width
 
 # Get the image height
 image_height = image.height
+
+# Get the image aspect ratio
+image_aspect_ratio = image.aspect_ratio
+
+# Get the image area
+image_area = image.area
 
 # Get the image data in bytes
 image_data = image.bytes

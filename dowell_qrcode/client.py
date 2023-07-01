@@ -3,6 +3,7 @@ Contains base class for the Dowell QR Code Generator API Client
 """
 
 import requests
+import json
 import random
 from bs4_web_scraper.utils import generate_random_user_agents
 from bs4_web_scraper import scraper
@@ -70,7 +71,7 @@ class Client:
         self.username = username
         self.user_id = user_id
         user_agent = get_new_user_agent()
-        self.session_.headers.update({'User-Agent': user_agent})
+        self.session_.headers.update({"User-Agent": user_agent})
 
 
     @classmethod
@@ -130,7 +131,7 @@ class Client:
             "qrcode_color": data.get('qrcode_color', '#000000'),
             "logo_size": data.get('logo_size', 20),
             "description": data.get('description', ''),
-            "is_active": data.get('is_active', False),
+            "is_active": data.get('is_active', False)
         }
         try:
             self._validate_payload(payload, validate_with=ALLOWED_CREATE_FIELDS)
@@ -138,10 +139,16 @@ class Client:
             raise e                   
         return payload
 
+    
+    def endsession(self):
+        """End client request session with API"""
+        self.session_.cookies.clear()
+        return self.session_.close()
+
 
     def generate_qrcode(self, obj: str | Any, product_name: str = None, qrcode_type: str = "Link", verbose: bool = False, **kwargs):
         """
-        Generate QR Code for object of `qrcode_type`. QR code is activated by default.
+        Generate QR Code for object of `qrcode_type`. QR code is deactivated by default.
         
         :param obj (str | Any): object for which QR Code is to be generated. If `qrcode_type` is `Link`, then `obj` should be a valid url.
         :param verbose (bool): if True, return the response object for the created QR code from the API
@@ -167,7 +174,6 @@ class Client:
             "link": obj, 
             "product_name": product_name or '',
             "qrcode_type": qrcode_type,
-            "is_active": True,
         }
             
         files = []
@@ -195,7 +201,7 @@ class Client:
             if len(response_data) > 1:
                 return [ (data["qrcode_image_url"], data["qrcode_id"]) for data in response_data ]
             else:
-                return (response_data["qrcode_image_url"], response_data["qrcode_id"])
+                return (response_data[0]["qrcode_image_url"], response_data[0]["qrcode_id"])
         else:
             raise QRCodeGenerationError(f"Error generating QR Code: reason: {response.text}")
 
@@ -226,22 +232,20 @@ class Client:
         return response_data
 
 
-    def update_qrcode(self, qrcode_id: str, qrcode_link: str, data: Dict[str, Any], verbose: bool = False):
+    def update_qrcode(self, qrcode_id: str, data: Dict[str, Any], verbose: bool = False):
         """
         Updates QR Code with data provided. Occasionally, updates may take a while to reflect.
 
         :param qrcode_id (str): `qrcode_id` of QR Code to be updated
-        :param qrcode_link (str): new `link` or previous `link` of the QR Code to be updated.
-        This must always be provided.
         :param data (Dict[str, Any]): data to be updated
         :param verbose (bool): if True, return the response object instead of the image url
 
         :return: link to new QR Code image by default.
         :raises: QRCodeUpdateError if the API returns an error
         """
-        data.update({"link": qrcode_link, "company_id": self.user_id, "created_by": data.get('created_by', self.user_id)})
+        data.update({"company_id": self.user_id})
         self._validate_payload(data, validate_with=ALLOWED_UPDATE_FIELDS)
-        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", data=data)
+        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", json=data)
 
         if not response.ok:
             raise QRCodeUpdateError(f"Error updating QR Code: reason: {response.text}")
@@ -261,12 +265,14 @@ class Client:
 
         :return: link to QR Code image by default
         :raises QRCodeNotFoundError: if QR Code with `qrcode_id` is not found
+        :raises QRCodeRetrievalError: if there is an error retrieving QR Code
         """
         response = self.session_.get(f"{api_put_url}/{qrcode_id}/")
-        if not response.ok:
-            if response.status_code == 404:
-                raise QRCodeNotFoundError(f"QR Code with id {qrcode_id} not found")
+        if not response.ok and response.status_code != 404:
             raise QRCodeRetrievalError(f"Error getting QR Code: reason: {response.text}")
+
+        if not response.json()['response'] or response.status_code == 404:
+            raise QRCodeNotFoundError(f"QR Code with id {qrcode_id} not found")
         response_data = response.json()['response'][0]
         response_data = self._correct_response_data(response_data)
         if verbose is True:
@@ -297,8 +303,7 @@ class Client:
         :raises ClientError: if QR Code is not activated
         """
         try:
-            qrcode = self.get_qrcode(qrcode_id, verbose=True)
-            activated_qrcode = self.update_qrcode(qrcode_id, qrcode['link'], {'is_active': True}, verbose=True)
+            activated_qrcode = self.update_qrcode(qrcode_id, data={'is_active': True}, verbose=True)
             if activated_qrcode['is_active'] != True:
                 raise ClientError(f"Error activating QR Code: reason: `is_active` is still False")
         except ClientError as e:
@@ -314,8 +319,7 @@ class Client:
         :raises ClientError: if QR Code is not deactivated
         """
         try:
-            qrcode = self.get_qrcode(qrcode_id, verbose=True)
-            deactivated_qrcode = self.update_qrcode(qrcode_id, qrcode['link'], {'is_active': False}, verbose=True)
+            deactivated_qrcode = self.update_qrcode(qrcode_id, data={'is_active': False}, verbose=True)
             if deactivated_qrcode['is_active'] != False:
                 raise ClientError(f"Error deactivating QR Code: reason: `is_active` is still True")
         except ClientError as e:
