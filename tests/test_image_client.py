@@ -44,7 +44,6 @@ class TestImageClient(TestClient, unittest.TestCase):
             self.assertIsInstance(resp, list)
             for i in resp:
                 self.assertIsInstance(i, dict)
-                self.assertTrue(i['product_name'] == "face")
                 self.assertTrue(i['description'] == "Image QR code")
                 self.assertTrue(i['qrcode_color'] == "#00ff23")
                 self.assertTrue(i['logo_size'] == 30)

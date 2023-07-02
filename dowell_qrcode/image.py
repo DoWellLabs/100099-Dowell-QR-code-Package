@@ -95,12 +95,22 @@ class Image:
         
     @property
     def gray(self):
-        """Image data in grayscale"""
-        if self.channels == 1:
+        """
+        Image data in grayscale. If image is already grayscale, image data is returned as is.
+        If the image is in color, it is converted to grayscale but if it is in binary, binary is still returned.
+        Binary cannot be converted to grayscale.
+        """
+        if self.channels < 3:
             return self.data
-        if self.channels == 3:
+
+        elif self.channels == 3:
             return cv2.cvtColor(self.data, cv2.COLOR_BGR2GRAY)
-        return cv2.cvtColor(self.data, cv2.COLOR_BGRA2GRAY)
+        
+        elif self.channels > 3:
+            return cv2.cvtColor(self.data, cv2.COLOR_BGRA2GRAY)
+
+        else:
+            raise Exception(f'Invalid number of channels -> {self.channels}. Cannot convert to grayscale')
 
     @property
     def eqgray(self):
@@ -149,9 +159,21 @@ class Image:
 
     @property
     def channels(self):
-        """Number of channels in image"""
-        print("Shape: ", self.data.shape)
-        return self.data.shape[2]
+        """
+        Number of channels in image
+        
+        For color images, channels are typically Red, Green, and Blue (RGB) or Blue, Green, Red, and Alpha (BGRA).
+        color images have 3 or 4 channels. Grayscale images have 1 channel. Binary images have 1.1 channels(just to distinguish from grayscale), although
+        binary images are technically grayscale images with only two colors (black and white) and have 1 channel.
+        """
+        try:
+            return self.data.shape[2]
+        except IndexError:
+            # if data.shape is just (height, width) then image data has less than two channels
+            unique_colors = np.unique(self.data)
+            if len(unique_colors) == 2 and [0, 255] in unique_colors: # that is only black and white
+                return 1.1 # Although binary images have 1 channel, we return 1.1 to differentiate from grayscale
+            return 1
 
     @property
     def is_grayscale(self):
@@ -166,7 +188,7 @@ class Image:
     @property
     def is_binary(self):
         """Check if image is binary"""
-        return self.channels == 0
+        return self.channels == 1.1
 
     @property
     def is_empty(self):
@@ -284,9 +306,9 @@ class Image:
         :param equalize (bool): whether to equalize the histogram of the grayscale image.
         """
         if equalize is True:
-            self.data = self.eqgray.shape
+            self.data = self.eqgray
         else:
-            self.data = self.gray.shape
+            self.data = self.gray
         return None
 
 

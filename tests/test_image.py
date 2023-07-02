@@ -115,18 +115,21 @@ class TestImage(unittest.TestCase):
             self.fail(e)
 
 
-    # def test_grayscale(self):
-    #     try:
-    #         self.noface_image.grayscale()
-    #         self.assertTrue(self.noface_image.is_grayscale)
-    #     except Exception as e:
-    #         self.fail(e)
+    def test_grayscale(self):
+        try:
+            self.noface_image.grayscale()
+            self.assertTrue(self.noface_image.is_grayscale)
+            self.noface_image.grayscale(equalize=True)
+            self.assertTrue(self.noface_image.is_grayscale)
+        except Exception as e:
+            self.fail(e)
 
     
     def test_makebinary(self):
         try:
             self.noface_image.makebinary()
-            self.assertTrue(self.noface_image.makebinary(invert=True))
+            self.assertTrue(self.noface_image.is_binary)
+            self.noface_image.makebinary(invert=True)
             self.assertTrue(self.noface_image.is_binary)
         except Exception as e:
             self.fail(e)
