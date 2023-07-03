@@ -399,7 +399,7 @@ Instatiation works the same as the ``Client`` class.
    import dowell_qrcode
 
    # Instatiate the ImageClient
-   image_client = dowell_qrcode.ImageClient(username='Username', user)='password')
+   image_client = dowell_qrcode.ImageClient(username='Username', user_id='UserID')
 
 Modified Methods
 ~~~~~~~~~~~~~~~~
