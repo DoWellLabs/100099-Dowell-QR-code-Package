@@ -2,5 +2,5 @@
 **/test.py
 **/to_rst.py
 **/index.md
-**/index.rst
+./index.rst
 **/docs/build
