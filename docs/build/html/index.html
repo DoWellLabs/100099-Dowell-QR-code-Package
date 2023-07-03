@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📑 Dowell QR Code Generator Client Documentation &mdash; Dowell QR Code Generator Client 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Dowell QR Code Generator Client
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">📑 Dowell QR Code Generator Client Documentation</a><ul>
+<li><a class="reference internal" href="#about-the-api">About the API</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#quickstart">Quickstart</a><ul>
+<li><a class="reference internal" href="#generating-qr-codes-for-links">Generating QR Codes for Links</a></li>
+<li><a class="reference internal" href="#generating-qr-codes-for-images">Generating QR Codes for Images</a></li>
+<li><a class="reference internal" href="#getting-qr-code-details">Getting QR Code Details</a></li>
+<li><a class="reference internal" href="#getting-all-qr-codes">Getting all QR Codes</a></li>
+<li><a class="reference internal" href="#updating-qr-code-details">Updating QR Code Details</a></li>
+<li><a class="reference internal" href="#downloading-qr-code-image">Downloading QR Code Image</a></li>
+<li><a class="reference internal" href="#deactivating-a-qr-code">Deactivating a QR Code</a></li>
+<li><a class="reference internal" href="#activating-a-qr-code">Activating a QR Code</a></li>
+<li><a class="reference internal" href="#end-user-session-with-the-api">End User Session with the API</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#the-client-class">The <code class="docutils literal notranslate"><span class="pre">Client</span></code> Class</a><ul>
+<li><a class="reference internal" href="#instantiating-the-client-class">Instantiating the <code class="docutils literal notranslate"><span class="pre">Client</span></code> Class</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#methods">Methods</a></li>
+<li><a class="reference internal" href="#constants">Constants</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-imageclient-class">The <code class="docutils literal notranslate"><span class="pre">ImageClient</span></code> Class</a><ul>
+<li><a class="reference internal" href="#instatiating-the-imageclient-class">Instatiating the <code class="docutils literal notranslate"><span class="pre">ImageClient</span></code> Class</a></li>
+<li><a class="reference internal" href="#modified-methods">Modified Methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-image-class">The <code class="docutils literal notranslate"><span class="pre">Image</span></code> Class</a><ul>
+<li><a class="reference internal" href="#instatiating-the-image-class">Instatiating the <code class="docutils literal notranslate"><span class="pre">Image</span></code> class</a></li>
+<li><a class="reference internal" href="#id2">Attributes</a></li>
+<li><a class="reference internal" href="#id3">Methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-api-version-and-status">Get API version and status</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Dowell QR Code Generator Client</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">📑 Dowell QR Code Generator Client Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dowell-qr-code-generator-client-documentation">
+<h1>📑 Dowell QR Code Generator Client Documentation<a class="headerlink" href="#dowell-qr-code-generator-client-documentation" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>This is a python client for the Dowell QR Code Generator API. Uses API version 2.</p>
+<section id="about-the-api">
+<h2>About the API<a class="headerlink" href="#about-the-api" title="Permalink to this heading"></a></h2>
+<p>This API provides endpoints that allows for the creation, retrieval and update of two-dimensional barcodes - QR codes, that can store data such as URLs and other types of information. Read the <a class="reference external" href="https://documenter.getpostman.com/view/14306028/2s93mBwyrj">API documentation</a> for more information.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
+<p>No package yet. You can clone the repository and import the <code class="docutils literal notranslate"><span class="pre">dowell_qrcode</span></code> module from the local repository.</p>
+</section>
+<section id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h2>
+<p>Here is a quickstart guide to get you started.</p>
+<section id="generating-qr-codes-for-links">
+<h3>Generating QR Codes for Links<a class="headerlink" href="#generating-qr-codes-for-links" title="Permalink to this heading"></a></h3>
+<p>To import the api client used to create QR codes for links, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="c1"># Create a client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate QR Code for a link</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="s1">&#39;https://www.google.com&#39;</span><span class="p">,</span> <span class="n">product_name</span><span class="o">=</span><span class="s1">&#39;Google Link&#39;</span><span class="p">,</span> <span class="n">qrcode_type</span><span class="o">=</span><span class="s1">&#39;Link&#39;</span><span class="p">)</span>
+<span class="c1"># You can read the method docstring for more information on other keyword arguments you can pass</span>
+
+<span class="n">qrcode_image_url</span><span class="p">,</span> <span class="n">qrcode_id</span> <span class="o">=</span> <span class="n">result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qrcode_image_url</span><span class="p">,</span> <span class="n">qrcode_id</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">client.generate_qrcode</span></code> usually returns a tuple containing the qrcode image url and the qrcode id. You can read the method docstring for more information on the return type.</p>
+<p>To get a more detailed result set the <code class="docutils literal notranslate"><span class="pre">verbose</span></code> argument to True.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="s1">&#39;https://www.google.com&#39;</span><span class="p">,</span> <span class="n">product_name</span><span class="o">=</span><span class="s1">&#39;Google Link&#39;</span><span class="p">,</span> <span class="n">qrcode_type</span><span class="o">=</span><span class="s1">&#39;Link&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">activate_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;qrcode_id&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The result returned here is basically the response object from the API. You can read the <a class="reference external" href="https://documenter.getpostman.com/view/14306028/2s93mBwyrj">API documentation</a> for more information on the response object.</p>
+</section>
+<section id="generating-qr-codes-for-images">
+<h3>Generating QR Codes for Images<a class="headerlink" href="#generating-qr-codes-for-images" title="Permalink to this heading"></a></h3>
+<p>Generating QR codes for links is done using a different client from the one used to generate QR codes for images. To import the api client used to create QR codes for images, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="c1"># Create a client</span>
+<span class="n">image_client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">ImageClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate QR Code for an image</span>
+
+<span class="c1"># Create a custom image object using the Image class</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;path/to/image.png&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">image_client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;My image&#39;</span><span class="p">)</span>
+
+<span class="c1"># Alternatively, you can pass the path to the image file directly</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">image_client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="s1">&#39;path/to/image.png&#39;</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;My image&#39;</span><span class="p">)</span>
+<span class="c1"># You can read the method docstring for more information on other keyword arguments you can pass</span>
+
+<span class="n">qrcode_image_url</span><span class="p">,</span> <span class="n">qrcode_id</span> <span class="o">=</span> <span class="n">result</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qrcode_image_url</span><span class="p">,</span> <span class="n">qrcode_id</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note that ImageClient can only generate QR codes for images that have at least one human face in it. If you try to generate a QR code for an image that does not have a human face, a <code class="docutils literal notranslate"><span class="pre">NoFaceDetected</span></code> error will be raised.</p>
+</div></blockquote>
+</section>
+<section id="getting-qr-code-details">
+<h3>Getting QR Code Details<a class="headerlink" href="#getting-qr-code-details" title="Permalink to this heading"></a></h3>
+<p>To get the details of an already existing QR code, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+<span class="n">qrcode_image_url</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qrcode_image_url</span><span class="p">)</span>
+
+<span class="c1"># For a more detailed result, set the verbose argument to True</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="getting-all-qr-codes">
+<h3>Getting all QR Codes<a class="headerlink" href="#getting-all-qr-codes" title="Permalink to this heading"></a></h3>
+<p>To get a qr code list associated to a user, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qr_code_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcodes</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qr_code_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="updating-qr-code-details">
+<h3>Updating QR Code Details<a class="headerlink" href="#updating-qr-code-details" title="Permalink to this heading"></a></h3>
+<p>To update the details of an already existing QR code, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">update_payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;qrcode_color&quot;</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s1">&#39;This is a new description&#39;</span>
+<span class="p">}</span>
+<span class="n">updated_qrcode</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">update_payload</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">updated_qrcode</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Note! You cannot update the qrcode <code class="docutils literal notranslate"><span class="pre">company_id</span></code> and <code class="docutils literal notranslate"><span class="pre">logo</span></code>(for images only) field. If you try to update, it will be ignored.</p>
+</div></blockquote>
+<p>For more info on fields you can update:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dowell_qrcode</span> <span class="kn">import</span> <span class="n">client</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">ALLOWED_UPDATE_FIELDS</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="downloading-qr-code-image">
+<h3>Downloading QR Code Image<a class="headerlink" href="#downloading-qr-code-image" title="Permalink to this heading"></a></h3>
+<p>To download the QR code image, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+<span class="n">qrcode_image_url</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+
+<span class="c1"># returns a FileHandler object</span>
+<span class="n">file_handler</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">download_qrcode</span><span class="p">(</span><span class="n">qrcode_url</span><span class="o">=</span><span class="n">qrcode_image_url</span><span class="p">,</span> <span class="n">save_to</span><span class="o">=</span><span class="s1">&#39;path/to/dir&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">file_handler</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
+<span class="n">file_handler</span><span class="o">.</span><span class="n">close_file</span><span class="p">()</span> <span class="c1"># Always close the file handler after use</span>
+</pre></div>
+</div>
+</section>
+<section id="deactivating-a-qr-code">
+<h3>Deactivating a QR Code<a class="headerlink" href="#deactivating-a-qr-code" title="Permalink to this heading"></a></h3>
+<p>QR codes cannot be deleted. They can only be deactivated. To deactivate a QR code, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">deactivate_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;is_active&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="activating-a-qr-code">
+<h3>Activating a QR Code<a class="headerlink" href="#activating-a-qr-code" title="Permalink to this heading"></a></h3>
+<p>To activate a QR code, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+<span class="n">client</span><span class="o">.</span><span class="n">activate_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="s1">&#39;is_active&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="end-user-session-with-the-api">
+<h3>End User Session with the API<a class="headerlink" href="#end-user-session-with-the-api" title="Permalink to this heading"></a></h3>
+<p>To end a user session with the API, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">endsession</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
+<section id="the-client-class">
+<h3>The <code class="docutils literal notranslate"><span class="pre">Client</span></code> Class<a class="headerlink" href="#the-client-class" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Client</span></code> class is used to create a client object that can be used to interact with the API. Listed below are most of the objects attributes and methods:</p>
+<section id="instantiating-the-client-class">
+<h4>Instantiating the <code class="docutils literal notranslate"><span class="pre">Client</span></code> Class<a class="headerlink" href="#instantiating-the-client-class" title="Permalink to this heading"></a></h4>
+<p>Creating an instance requires the <code class="docutils literal notranslate"><span class="pre">username</span></code> and <code class="docutils literal notranslate"><span class="pre">user_id</span></code> of the user.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="c1"># Create a client</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s2">&quot;UserID&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="attributes">
+<h4>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Client</span></code> object has the following attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">username</span></code>: The username of the user</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code>: The user id of the user</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">session_</span></code>: The session object used to make requests to the API at the moment</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user_agent</span></code>: The user agent used in <code class="docutils literal notranslate"><span class="pre">client.session_</span></code> headers</p></li>
+</ul>
+</section>
+<section id="methods">
+<h4>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Client</span></code> object has the following methods:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_qrcode(qrcode_id,</span> <span class="pre">verbose=False)</span></code>: Get the details of a QR code</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_id</span></code>: The id of the QR code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: If True, returns a more detailed result</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># set verbose to False to get a simpler result</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_qrcodes()</span></code>: Get a list of all QR codes associated to the user</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">qr_code_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcodes</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">qr_code_list</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">generate_qrcode(self,</span> <span class="pre">obj:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">Any,</span> <span class="pre">product_name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">qrcode_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&quot;Link&quot;,</span> <span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">**kwargs)</span></code>: Generate a QR code for a link</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">obj</span></code>: The object to generate a QR code for. It can be a link or an image object</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">product_name</span></code>: The name of the product</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_type</span></code>: The type of QR code to generate. Leave as <code class="docutils literal notranslate"><span class="pre">Link</span></code> for now</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: If True, returns a more detailed result</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>: Other keyword arguments to pass to the API</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="s1">&#39;https://www.google.com&#39;</span><span class="p">,</span> <span class="n">product_name</span><span class="o">=</span><span class="s1">&#39;Google&#39;</span><span class="p">,</span> <span class="n">qrcode_type</span><span class="o">=</span><span class="s1">&#39;Link&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># providing other keyword arguments</span>
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;qrcode_color&quot;</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s1">&#39;This is a new description&#39;</span>
+    <span class="s2">&quot;quantity&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="c1"># The number of QR codes to generate. Multiple results will be returned</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="s1">&#39;https://www.google.com&#39;</span><span class="p">,</span> <span class="n">product_name</span><span class="o">=</span><span class="s1">&#39;Google&#39;</span><span class="p">,</span> <span class="n">qrcode_type</span><span class="o">=</span><span class="s1">&#39;Link&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_qrcode(qrcode_id,</span> <span class="pre">data,</span> <span class="pre">verbose=False)</span></code>: Update the details of a QR code</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_id</span></code>: The id of the QR code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: The data to update the QR code with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: If True, returns a more detailed result</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;product_name&quot;</span><span class="p">:</span> <span class="s2">&quot;New Product Name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;New Description&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qrcode_color&quot;</span><span class="p">:</span> <span class="s2">&quot;#ff0000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;logo&quot;</span><span class="p">:</span> <span class="s2">&quot;path/to/logo.png&quot;</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">update_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">download_qrcode(qrcode_url,</span> <span class="pre">save_to)</span></code>: Download a QR code image</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_url</span></code>: The url of the QR code image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_to</span></code>: The path to save the QR code image to</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">qrcode_image_url</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+<span class="n">file_handler</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">download_qrcode</span><span class="p">(</span><span class="n">qrcode_url</span><span class="o">=</span><span class="n">qrcode_image_url</span><span class="p">,</span> <span class="n">save_to</span><span class="o">=</span><span class="s1">&#39;path/to/dir&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">file_handler</span><span class="o">.</span><span class="n">file_path</span><span class="p">)</span>
+<span class="n">file_handler</span><span class="o">.</span><span class="n">close_file</span><span class="p">()</span> <span class="c1"># Always close the file handler after use</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">deactivate_qrcode(qrcode_id)</span></code>: Deactivate a QR code</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_id</span></code>: The id of the QR code</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">client</span><span class="o">.</span><span class="n">deactivate_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">activate_qrcode(qrcode_id)</span></code>: Activate a QR code</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">client</span><span class="o">.</span><span class="n">activate_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">endsession()</span></code>: End the user session with the API</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">client</span><span class="o">.</span><span class="n">endsession</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_status()</span></code>: Get the status of the API</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_status</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="constants">
+<h4>Constants<a class="headerlink" href="#constants" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">dowell_qrcode</span></code> module has the following constants:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ALLOWED_UPDATE_FIELDS</span></code>: The fields that can be updated for a QR code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ALLOWED_CREATE_FIELDS</span></code>: The fields that can be passed to the API to create a QR code</p></li>
+</ul>
+<p>To access the constants, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dowell_qrcode</span> <span class="kn">import</span> <span class="n">client</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">ALLOWED_UPDATE_FIELDS</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">ALLOWED_CREATE_FIELDS</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="the-imageclient-class">
+<h3>The <code class="docutils literal notranslate"><span class="pre">ImageClient</span></code> Class<a class="headerlink" href="#the-imageclient-class" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">ImageClient</span></code> class is used to generate QR codes for images. It is a subclass of the <code class="docutils literal notranslate"><span class="pre">Client</span></code> class. Hence, it inherits all methods and attributes of the <code class="docutils literal notranslate"><span class="pre">Client</span></code> class except for two specific methods, <code class="docutils literal notranslate"><span class="pre">generate_qrcode</span></code> and <code class="docutils literal notranslate"><span class="pre">update_qrcode</span></code>, modified to allow for QR code generation for images.</p>
+<p>For more information on the <code class="docutils literal notranslate"><span class="pre">Client</span></code> class, see the <a class="reference external" href="#the-client-class">Client Class</a> section.</p>
+<section id="instatiating-the-imageclient-class">
+<h4>Instatiating the <code class="docutils literal notranslate"><span class="pre">ImageClient</span></code> Class<a class="headerlink" href="#instatiating-the-imageclient-class" title="Permalink to this heading"></a></h4>
+<p>Instatiation works the same as the <code class="docutils literal notranslate"><span class="pre">Client</span></code> class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="c1"># Instatiate the ImageClient</span>
+<span class="n">image_client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">ImageClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="modified-methods">
+<h4>Modified Methods<a class="headerlink" href="#modified-methods" title="Permalink to this heading"></a></h4>
+<p>The following methods have been modified to allow for QR code generation for images:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">generate_qrcode(self,</span> <span class="pre">image:</span> <span class="pre">Image</span> <span class="pre">|</span> <span class="pre">str,</span> <span class="pre">image_name:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">qrcode_type:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">&quot;Link&quot;,</span> <span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">**kwargs)</span></code>: Generate a QR code for an image. Uses <a class="reference external" href="#the-image-class">Image</a> objects.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">image</span></code>: The image object or path to the image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">image_name</span></code>: The name of the image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_type</span></code>: The type of QR code to generate. Leave as is.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: If True, returns a more detailed result</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>: Other keyword arguments to pass to the API</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example using an `Image` object</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;path/to/image.png&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">image_client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">img</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">qrcode_type</span><span class="o">=</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Alternatively, you can pass the path to the image</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">image_client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="s1">&#39;path/to/image.png&#39;</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">qrcode_type</span><span class="o">=</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># providing other keyword arguments</span>
+<span class="c1"># Note `logo` is not allowed for image QR codes</span>
+<span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;qrcode_color&quot;</span><span class="p">:</span> <span class="s1">&#39;#ff0000&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s1">&#39;This is a new description&#39;</span>
+    <span class="s2">&quot;quantity&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="c1"># The number of QR codes to generate. Multiple results will be returned</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">image_client</span><span class="o">.</span><span class="n">generate_qrcode</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="s1">&#39;path/to/image.png&#39;</span><span class="p">,</span> <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;Image&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">update_qrcode(self,</span> <span class="pre">qrcode_id,</span> <span class="pre">data,</span> <span class="pre">verbose=False)</span></code>: Update the details of a QR code</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">qrcode_id</span></code>: The id of the QR code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: The data to update the QR code with</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">verbose</span></code>: If True, returns a more detailed result</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># Note `logo` is not allowed for image QR codes</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;product_name&quot;</span><span class="p">:</span> <span class="s2">&quot;New Product Name&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;New Description&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;qrcode_color&quot;</span><span class="p">:</span> <span class="s2">&quot;#ff0000&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">image_client</span><span class="o">.</span><span class="n">update_qrcode</span><span class="p">(</span><span class="n">qrcode_id</span><span class="o">=</span><span class="s1">&#39;QrCodeID&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="the-image-class">
+<h3>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> Class<a class="headerlink" href="#the-image-class" title="Permalink to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> class is used to create a custom image object that can be passed to the ImageClient to generate QR codes for images. It also allows for face detection in the image. Listed below are most of the objects attributes and methods:</p>
+<section id="instatiating-the-image-class">
+<h4>Instatiating the <code class="docutils literal notranslate"><span class="pre">Image</span></code> class<a class="headerlink" href="#instatiating-the-image-class" title="Permalink to this heading"></a></h4>
+<p>To instatiate the <code class="docutils literal notranslate"><span class="pre">Image</span></code> class, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="c1"># Instatiate the Image class</span>
+<span class="n">image</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;path/to/image.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h4>Attributes<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> class has the following attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: The image data as a numpy array</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: The path to the image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">format</span></code>: The image extension format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code>: The image size in bytes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code>: The image width</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: The image height</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aspect_ratio</span></code>: The image aspect ratio</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">area</span></code>: The image area</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bytes</span></code>: The image data in bytes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">has_face</span></code>: True if the image has a human face, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">face_count</span></code>: The number of faces in the image</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gray</span></code>: The image data in grayscale</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eqgray</span></code>: The image data in equalized grayscale</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary</span></code>: The image data in binary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">binary_inv</span></code>: The image data in inverted binary</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_empty</span></code>: True if the image data is empty, that is <code class="docutils literal notranslate"><span class="pre">image.size</span></code> is (0, 0), False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_valid</span></code>: Returns True if image data is not empty, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_color</span></code>: Returns True if the image is in color, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_grayscale</span></code>: Returns True if the image is in grayscale, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_binary</span></code>: Returns True if the image is in binary, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_valid_color</span></code>: Returns True if the image is valid and in color, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_valid_grayscale</span></code>: Returns True if the image is valid and in grayscale, False otherwise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">is_valid_binary</span></code>: Returns True if the image is valid and in binary, False otherwise</p></li>
+</ul>
+</section>
+<section id="id3">
+<h4>Methods<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> class has the following methods:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_faces()</span></code>: Find faces in the image</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">face_coordinates</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">find_faces</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">face_coordinates</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">markout_faces(self,</span> <span class="pre">face_coordinates:</span> <span class="pre">List[Tuple[int,</span> <span class="pre">int,</span> <span class="pre">int,</span> <span class="pre">int]],</span> <span class="pre">color:</span> <span class="pre">tuple</span> <span class="pre">=</span> <span class="pre">(0,</span> <span class="pre">255,</span> <span class="pre">0))</span></code>: Mark out faces in the image</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">face_coordinates</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">find_faces</span><span class="p">()</span>
+<span class="n">image</span><span class="o">.</span><span class="n">markout_faces</span><span class="p">(</span><span class="n">face_coordinates</span><span class="o">=</span><span class="n">face_coordinates</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span> <span class="c1"># draw red rectangles around the faces</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save(path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">quality:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100)</span></code>: Save the image to a file</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: The path to save the image to. If None, the image is saved in the origin path</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quality</span></code>: The quality of the image to save. Only applies to JPEG, JPG, WEBP, PNG, and TIFF images</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># save image in origin path</span>
+<span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="c1"># save image in a new path</span>
+<span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;path/to/new/image.png&#39;</span><span class="p">)</span>
+
+<span class="c1"># save image with quality compression</span>
+<span class="n">image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">quality</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">show()</span></code>: Show the image in a desktop window</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="n">image</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resize(self,</span> <span class="pre">width:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">height:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">interpolation:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">cv2.INTER_AREA)</span></code>: Resize the image</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code>: The width to resize the image to</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: The height to resize the image to</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">interpolation</span></code>: The interpolation method to use</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># resize image to 500x500</span>
+<span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">crop(self,</span> <span class="pre">x_top_left:</span> <span class="pre">int,</span> <span class="pre">y_top_left:</span> <span class="pre">int,</span> <span class="pre">width:</span> <span class="pre">int,</span> <span class="pre">height:</span> <span class="pre">int,</span> <span class="pre">resize:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True)</span></code>: Crop the image</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x_top_left</span></code>: The x coordinate of the top left corner of the crop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_top_left</span></code>: The y coordinate of the top left corner of the crop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code>: The width of the crop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: The height of the crop</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">resize</span></code>: If True, resize the image to the original image size</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># crop image to 500x500</span>
+<span class="n">image</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="n">x_top_left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_top_left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rotate(self,</span> <span class="pre">angle:</span> <span class="pre">int,</span> <span class="pre">center:</span> <span class="pre">tuple</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">scale:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">1.0)</span></code>: Rotate the image</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">angle</span></code>: The angle to rotate the image by</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">center</span></code>: The center of the rotation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scale</span></code>: Optional parameter to adjust the scale of the image during rotation</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># rotate image by 90 degrees</span>
+<span class="n">image</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">flip(self,</span> <span class="pre">direction:</span> <span class="pre">int)</span></code>: Flip the image</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">direction</span></code>: The direction to flip the image. 0 for vertical flip, 1 for horizontal flip, and -1 for both vertical and horizontal flip</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># flip image vertically</span>
+<span class="n">image</span><span class="o">.</span><span class="n">flip</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">draw_rectangle(self,</span> <span class="pre">x_top_left:</span> <span class="pre">int,</span> <span class="pre">y_top_left:</span> <span class="pre">int,</span> <span class="pre">width:</span> <span class="pre">int,</span> <span class="pre">height:</span> <span class="pre">int,</span> <span class="pre">rgb:</span> <span class="pre">tuple</span> <span class="pre">=</span> <span class="pre">(255,</span> <span class="pre">0,</span> <span class="pre">0),</span> <span class="pre">thickness:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">2)</span></code>: Draw a rectangle on the image</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x_top_left</span></code>: The x coordinate of the top left corner of the rectangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_top_left</span></code>: The y coordinate of the top left corner of the rectangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">width</span></code>: The width of the rectangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">height</span></code>: The height of the rectangle</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rgb</span></code>: The color of the rectangle border in RGB format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">thickness</span></code>: The thickness of the rectangle’s border</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># draw a red rectangle on the image</span>
+<span class="n">image</span><span class="o">.</span><span class="n">draw_rectangle</span><span class="p">(</span><span class="n">x_top_left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y_top_left</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">rgb</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grayscale(self,</span> <span class="pre">equalize:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span></code>: Convert <code class="docutils literal notranslate"><span class="pre">image.data</span></code> to grayscale. This replaces the original image data</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">equalize</span></code>: If True, equalize the grayscale image</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># convert image to grayscale</span>
+<span class="n">image</span><span class="o">.</span><span class="n">grayscale</span><span class="p">()</span>
+<span class="c1"># convert image to equalized grayscale</span>
+<span class="n">image</span><span class="o">.</span><span class="n">grayscale</span><span class="p">(</span><span class="n">equalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">makebinary(self,</span> <span class="pre">invert:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False)</span></code>: Convert <code class="docutils literal notranslate"><span class="pre">image.data</span></code> to binary. This replaces the original image data</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">invert</span></code>: If True, invert the binary image</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example</span>
+<span class="c1"># convert image to binary</span>
+<span class="n">image</span><span class="o">.</span><span class="n">makebinary</span><span class="p">()</span>
+<span class="c1"># convert image to inverted binary</span>
+<span class="n">image</span><span class="o">.</span><span class="n">makebinary</span><span class="p">(</span><span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="get-api-version-and-status">
+<h3>Get API version and status<a class="headerlink" href="#get-api-version-and-status" title="Permalink to this heading"></a></h3>
+<p>To get the API version and status, use the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
+
+<span class="c1"># Get API version</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">api_version</span><span class="p">)</span>
+
+<span class="c1"># Get API status</span>
+<span class="n">status</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">get_api_status</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pypi.org/project/opencv-python/">opencv-python</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/requests/">requests</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/bs4-web-scraper/">bs4_web_scraper</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Daniel T. Afolayan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

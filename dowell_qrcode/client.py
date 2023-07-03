@@ -3,7 +3,6 @@ Contains base class for the Dowell QR Code Generator API Client
 """
 
 import requests
-import json
 import random
 from bs4_web_scraper.utils import generate_random_user_agents
 from bs4_web_scraper import scraper
@@ -22,6 +21,7 @@ api_put_url = f"{api_base_url}/update-qr-code/"
 actual_image_url_base = "http://67.217.61.253/uploadfiles/qrcode-download"
 
 ALLOWED_CREATE_FIELDS = {
+    "logo": str,
     "quantity": int,
     "created_by": str,
     "company_id": str,
@@ -36,6 +36,7 @@ ALLOWED_CREATE_FIELDS = {
 
 
 ALLOWED_UPDATE_FIELDS = {
+    "logo": str,
     "company_id": str,
     "created_by": str,
     "link": str,
@@ -60,6 +61,7 @@ class Client:
     """Handles QR Code generation, update and retrieval using Dowell QR Code Generator API"""
 
     session_ = requests.Session()
+    user_agent = get_new_user_agent()
 
     def __init__(self, username: str, user_id: str):
         """
@@ -70,8 +72,7 @@ class Client:
         """
         self.username = username
         self.user_id = user_id
-        user_agent = get_new_user_agent()
-        self.session_.headers.update({"User-Agent": user_agent})
+        self.session_.headers.update({"User-Agent": self.user_agent})
 
 
     @classmethod
@@ -244,8 +245,22 @@ class Client:
         :raises: QRCodeUpdateError if the API returns an error
         """
         data.update({"company_id": self.user_id})
+        # Handle logo data
+        logo_path = data.pop('logo', '')
+        files = []
+        if logo_path:
+            logo_path = logo_path.strip().replace('\\', '/')
+            logo_name = logo_path.split('/')[-1]
+            f = open(logo_path, mode="rb")
+            files = [
+                ('logo', (logo_name, f, 'application/octet-stream'))
+            ]
+
         self._validate_payload(data, validate_with=ALLOWED_UPDATE_FIELDS)
-        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", json=data)
+        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", data=data, files=files)
+
+        if logo_path:
+            f.close()
 
         if not response.ok:
             raise QRCodeUpdateError(f"Error updating QR Code: reason: {response.text}")
@@ -328,7 +343,7 @@ class Client:
 
 
     @staticmethod
-    def download_qrcode_image(qrcode_url: str, save_to: str):
+    def download_qrcode(qrcode_url: str, save_to: str):
         """
         Download QR Code image from url
 

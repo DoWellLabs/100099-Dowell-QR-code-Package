@@ -3,10 +3,9 @@ Contains class for handling QR Code generation, update and retrieval for images 
 """
 
 from typing import Dict, Any
-import json
 
-from .exceptions import QRCodeGenerationError, NoFaceDetected, NotSupportedError
-from .client import Client, api_get_url
+from .exceptions import QRCodeGenerationError, NoFaceDetected, NotSupportedError, QRCodeUpdateError
+from .client import Client, api_get_url, api_put_url, ALLOWED_UPDATE_FIELDS
 from .image import Image
 
 
@@ -17,7 +16,7 @@ class ImageClient(Client):
 
     def generate_qrcode(self, image: Image | str, image_name: str = None, qrcode_type: str = "Link", verbose: bool = False, **kwargs):
         """
-        Generate QR Code for image in path provided
+        Generate QR Code for image in path provided.
         
         :param image (Image | str): Image object for image file or path to image file to be converted to QR Code
         :param image_name (str): name of image file to be converted to QR Code. Defaults to the name of the image file in the path provided.
@@ -32,7 +31,7 @@ class ImageClient(Client):
             :kwarg qrcode_color (str): color of QR Code to be generated. Must be a valid hex color code. Use colors that have good contrast with white.
 
             :kwarg description (str): description of QR Code to be generated
-
+        Note: `logo` field is disregarded for images.
         :return: a tuple of the QR Code image url and the QR Code id or a list of such tuples if quantity is greater than 1
         """
         if qrcode_type not in self.available_qrcode_types:
@@ -41,7 +40,7 @@ class ImageClient(Client):
         if isinstance(image, str):
             image_path = image.strip().replace('\\', '/')
             image = Image(path=image_path)
-        if not image.has_faces:
+        if not image.has_face:
             raise NoFaceDetected("Error Generating QR Code: No face could be detected in the image")
             
         image_name = image.name if image_name is None else image_name
@@ -85,3 +84,27 @@ class ImageClient(Client):
         qrcode_image_url = self.update_qrcode(qrcode_id, data={"link": logo_url})
         return qrcode_image_url, qrcode_id
 
+
+    def update_qrcode(self, qrcode_id: str, data: Dict[str, Any], verbose: bool = False):
+        """
+        Updates QR Code with data provided. Occasionally, updates may take a while to reflect.
+
+        :param qrcode_id (str): `qrcode_id` of QR Code to be updated
+        :param data (Dict[str, Any]): data to be updated
+        :param verbose (bool): if True, return the response object instead of the image url
+        Note: `logo` field is disregarded for images.
+
+        :return: link to new QR Code image by default.
+        :raises: QRCodeUpdateError if the API returns an error
+        """
+        data.update({"company_id": self.user_id})
+        self._validate_payload(data, validate_with=ALLOWED_UPDATE_FIELDS)
+        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", json=data)
+
+        if not response.ok:
+            raise QRCodeUpdateError(f"Error updating QR Code: reason: {response.text}")
+        response_data =  response.json()['response']
+        response_data = self._correct_response_data(response_data)
+        if verbose is True:
+            return response_data
+        return response_data['qrcode_image_url']

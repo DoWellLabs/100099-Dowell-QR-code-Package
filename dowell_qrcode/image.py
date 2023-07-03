@@ -364,7 +364,7 @@ class Image:
 
 
     @property
-    def has_faces(self):
+    def has_face(self):
         """Returns True if image has human faces"""
         return self.face_count > 0
     

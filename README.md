@@ -2,6 +2,8 @@
 
 This is a python client for the Dowell QR Code Generator API. Uses API version 2.
 
+**[Documentation]()**
+
 ## Setting up in local environment
 
 * Clone the repository to your local machine
@@ -113,7 +115,8 @@ print(updated_qrcode)
 
 ```
 
-> Note! You cannot update the qrcode `company_id` and `logo_url` fields. If you try to update, it will be ignored.
+> Note! You cannot update the qrcode `company_id` and `logo`(for images only) field. If you try to update, it will be ignored.
+
 For more info on fields you can update:
 
 ```python
@@ -177,88 +180,6 @@ client.endsession()
     
 ```
 
-### The `Image` Class
-
-The `Image` class is used to create a custom image object that can be passed to the ImageClient to generate QR codes for images. It also allows for face detection in the image. Listed below are most of the objects attributes and methods:
-
-```python
-
-from dowell_qrcode import Image
-
-# Create an image object
-image = Image('path/to/image.png')
-
-# Get the image name
-image_name = image.name
-
-# Get the image path
-image_path = image.path
-
-# Get the image extension format
-image_extension = image.format
-
-# Get the image size
-image_size = image.size
-
-# Get the image width
-image_width = image.width
-
-# Get the image height
-image_height = image.height
-
-# Get the image aspect ratio
-image_aspect_ratio = image.aspect_ratio
-
-# Get the image area
-image_area = image.area
-
-# Get the image data in bytes
-image_data = image.bytes
-
-# Check if the image has a human face
-has_face = image.has_face
-
-# Get the number of faces in the image
-face_count = image.face_count
-
-# Get the coordinates of the faces in the image
-face_locations = image.find_faces()
-
-# markout the faces in the image with a green color
-image.markout_faces(face_locations, color=(0, 255, 0))
-
-# Save the image
-image.save(...)
-
-# Convert image to grayscale
-image.grayscale()
-
-# Convert image to binary(black and white)
-image.makebinary()
-
-# Show image
-image.show()
-
-# Crop, flip, rotate, resize, etc
-image.crop(...)
-image.flip(...)
-image.rotate(...)
-image.resize(...)
-# etc
-
-# draw a rectangle on a specific part of the image
-image.draw_rectangle(...)
-
-# Check if image is color, grayscale or black and white
-is_color = image.is_color()
-is_grayscale = image.is_grayscale()
-is_binary = image.is_binary()
-
-# Check if image is valid
-is_valid = image.is_valid()
-
-```
-
 ### Get API version and status
 
 To get the API version and status, use the following code:
@@ -274,3 +195,9 @@ status = dowell_qrcode.get_api_status()
 print(status)
 
 ```
+
+### Dependencies
+
+* [opencv-python](https://pypi.org/project/opencv-python/)
+* [requests](https://pypi.org/project/requests/)
+* [bs4_web_scraper](https://pypi.org/project/bs4-web-scraper/)
