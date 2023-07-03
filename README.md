@@ -2,7 +2,7 @@
 
 This is a python client for the Dowell QR Code Generator API. Uses API version 2.
 
-**[Documentation]()**
+**[Documentation](https://dowell-qr-code-package.readthedocs.io/en/latest/)**
 
 ## Setting up in local environment
 
