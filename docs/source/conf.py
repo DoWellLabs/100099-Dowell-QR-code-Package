@@ -14,9 +14,7 @@ release = '0.1.0'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [
-    'm2r',
-]
+extensions = []
 
 # source_suffix = '.rst'
 source_suffix = ['.rst', '.md']
