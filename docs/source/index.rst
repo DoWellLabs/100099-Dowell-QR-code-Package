@@ -20,9 +20,6 @@ This API provides endpoints that allows for the creation, retrieval and update o
 Installation
 ------------
 
-Installation
-------------
-
 To install a distribution of this package, do the following:
 
 .. code-block:: bash
