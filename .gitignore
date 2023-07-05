@@ -2,5 +2,6 @@
 **/test.py
 **/to_rst.py
 **/index.md
-./index.rst
 **/docs/build
+**/pyproject.toml
+**/dowell_qrcode.egg-info

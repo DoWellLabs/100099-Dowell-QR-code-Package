@@ -45,6 +45,7 @@
 <li><a class="reference internal" href="#">📑 Dowell QR Code Generator Client Documentation</a><ul>
 <li><a class="reference internal" href="#about-the-api">About the API</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#id1">Installation</a></li>
 <li><a class="reference internal" href="#quickstart">Quickstart</a><ul>
 <li><a class="reference internal" href="#generating-qr-codes-for-links">Generating QR Codes for Links</a></li>
 <li><a class="reference internal" href="#generating-qr-codes-for-images">Generating QR Codes for Images</a></li>
@@ -72,8 +73,8 @@
 </li>
 <li><a class="reference internal" href="#the-image-class">The <code class="docutils literal notranslate"><span class="pre">Image</span></code> Class</a><ul>
 <li><a class="reference internal" href="#instatiating-the-image-class">Instatiating the <code class="docutils literal notranslate"><span class="pre">Image</span></code> class</a></li>
-<li><a class="reference internal" href="#id2">Attributes</a></li>
-<li><a class="reference internal" href="#id3">Methods</a></li>
+<li><a class="reference internal" href="#id3">Attributes</a></li>
+<li><a class="reference internal" href="#id4">Methods</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#get-api-version-and-status">Get API version and status</a></li>
@@ -119,7 +120,19 @@
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
-<p>No package yet. You can clone the repository and import the <code class="docutils literal notranslate"><span class="pre">dowell_qrcode</span></code> module from the local repository.</p>
+</section>
+<section id="id1">
+<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>To install a distribution of this package, do the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/DoWellLabs/100099-Dowell-QR-code-Package.git
+
+<span class="nb">cd</span><span class="w"> </span><span class="m">100099</span>-Dowell-QR-code-Package
+
+git<span class="w"> </span>checkout<span class="w"> </span>DowellQRCodeClient-DanielAfolayan
+
+pip<span class="w"> </span>install<span class="w"> </span>dist/dowell_qrcode-0.1.0-py3-none-any.whl
+</pre></div>
+</div>
 </section>
 <section id="quickstart">
 <h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h2>
@@ -430,7 +443,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dowell_qrcode</span>
 
 <span class="c1"># Instatiate the ImageClient</span>
-<span class="n">image_client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">ImageClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span><span class="o">=</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+<span class="n">image_client</span> <span class="o">=</span> <span class="n">dowell_qrcode</span><span class="o">.</span><span class="n">ImageClient</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;Username&#39;</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="s1">&#39;UserID&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -501,8 +514,8 @@
 </pre></div>
 </div>
 </section>
-<section id="id2">
-<h4>Attributes<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h4>
+<section id="id3">
+<h4>Attributes<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> class has the following attributes:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: The image data as a numpy array</p></li>
@@ -531,8 +544,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">is_valid_binary</span></code>: Returns True if the image is valid and in binary, False otherwise</p></li>
 </ul>
 </section>
-<section id="id3">
-<h4>Methods<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<section id="id4">
+<h4>Methods<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">Image</span></code> class has the following methods:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">find_faces()</span></code>: Find faces in the image</p>

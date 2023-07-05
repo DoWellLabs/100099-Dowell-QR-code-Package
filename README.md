@@ -9,6 +9,19 @@ This is a python client for the Dowell QR Code Generator API. Uses API version 2
 * Clone the repository to your local machine
 * Import the `dowell_qrcode` module from the local repository
 
+## Installing distribution
+
+```bash
+git clone https://github.com/DoWellLabs/100099-Dowell-QR-code-Package.git
+
+cd 100099-Dowell-QR-code-Package
+
+git checkout DowellQRCodeClient-DanielAfolayan
+
+pip install dist/dowell_qrcode-0.1.0-py3-none-any.whl
+
+```
+
 ## Usage
 
 ### Generating QR Codes for Links

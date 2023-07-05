@@ -20,7 +20,20 @@ This API provides endpoints that allows for the creation, retrieval and update o
 Installation
 ------------
 
-No package yet. You can clone the repository and import the ``dowell_qrcode`` module from the local repository.
+Installation
+------------
+
+To install a distribution of this package, do the following:
+
+.. code-block:: bash
+
+   git clone https://github.com/DoWellLabs/100099-Dowell-QR-code-Package.git
+
+   cd 100099-Dowell-QR-code-Package
+
+   git checkout DowellQRCodeClient-DanielAfolayan
+
+   pip install dist/dowell_qrcode-0.1.0-py3-none-any.whl
 
 Quickstart
 ----------
