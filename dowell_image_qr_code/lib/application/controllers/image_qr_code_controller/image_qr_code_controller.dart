@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dowell_image_qr_code/domain/models/api_response_model.dart';
 import 'package:dowell_image_qr_code/domain/models/image_qr_code_model.dart';
+import 'package:dowell_image_qr_code/infrastructure/api/api_end_points.dart';
 import 'package:dowell_image_qr_code/infrastructure/api/api_exceptions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -34,8 +35,9 @@ class QRCodeController extends GetxController {
       ImageQRCodeRequestModel qrCodeRequestModel) async {
     _isLoading.value = true;
     try {
-      var response =
-          await imageQRCodeRepository.createQRCode(qrCodeRequestModel);
+      var response = await imageQRCodeRepository.createQRCode(
+          qrCodeRequestModel,
+          queryParameters: {'api_key': ApiEndPoints.API_KEY});
 
       if (response.statusCode == 201) {
         if (response.data["qrcodes"] != null) {
@@ -43,19 +45,6 @@ class QRCodeController extends GetxController {
           response.data["qrcodes"].forEach((qrcode) {
             _qrCodes.add(Qrcodes.fromJson(qrcode));
           });
-
-          if (kDebugMode) {
-            print("After creating the data is: ${response.data["qrcodes"]}");
-          }
-
-          if (kDebugMode) {
-            print("After creating the data is: ${response.data["qrcodes"]}");
-          }
-          if (kDebugMode) {
-            print("success creating QRCode");
-
-            // _isLoading.value = false;
-          }
 
           return APIResponseModel(
               success: true, message: "Successfully Created QR Code");
@@ -68,18 +57,12 @@ class QRCodeController extends GetxController {
       } else {
         _isSuccess.value = false;
 
-        if (kDebugMode) {
-          print("error creating QRCode: ${response.statusCode}");
-        }
         isLoading.value = false;
         return APIResponseModel(
             success: false,
             message: response.statusMessage ?? "Error creating QRCode");
       }
     } on DioException catch (e) {
-      if (kDebugMode) {
-        print("error creating QRCode: $e");
-      }
       var error = ApiException.fromDioError(e);
       _isLoading.value = false;
       return APIResponseModel(success: false, message: error.errorMessage);
@@ -100,18 +83,11 @@ class QRCodeController extends GetxController {
         return APIResponseModel(
             success: true, message: "Successfully Got QR Code");
       } else {
-        if (kDebugMode) {
-          print("error gettting QRCode: ${response.statusCode}");
-        }
         return APIResponseModel(
             success: false,
             message: response.statusMessage ?? "Error Getting QRCode");
       }
     } on DioException catch (e) {
-      if (kDebugMode) {
-        print("error getting QRCode: $e");
-      }
-
       var error = ApiException.fromDioError(e);
 
       return APIResponseModel(success: false, message: error.errorMessage);
@@ -122,9 +98,8 @@ class QRCodeController extends GetxController {
   Future<APIResponseModel> updateQrCode(Qrcodes qrcode) async {
     _isLoading.value = true;
     try {
-      var response = await imageQRCodeRepository.updateQRCode(qrcode);
-
-      print("After update the response data is: ${response.data}");
+      var response = await imageQRCodeRepository.updateQRCode(qrcode,
+          queryParameters: {'api_key': ApiEndPoints.API_KEY});
 
       if (response.statusCode == 200) {
         _qrCodes.clear();
@@ -133,13 +108,6 @@ class QRCodeController extends GetxController {
           var qrCode = response.data["response"];
 
           _qrCodes.add(Qrcodes.fromJson(qrCode));
-
-          if (kDebugMode) {
-            print(response.data["qrcodes"]);
-          }
-          if (kDebugMode) {
-            print("success updating QRCode");
-          }
 
           _isLoading.value = false;
 
@@ -154,18 +122,12 @@ class QRCodeController extends GetxController {
       } else {
         _isSuccess.value = false;
 
-        if (kDebugMode) {
-          print("error updating QRCode: ${response.statusCode}");
-        }
         _isLoading.value = false;
         return APIResponseModel(
             success: false,
             message: response.statusMessage ?? "Error Updating QRCode");
       }
     } on DioException catch (e) {
-      if (kDebugMode) {
-        print("error updating QRCode: $e");
-      }
       _isLoading.value = false;
       var error = ApiException.fromDioError(e);
       return APIResponseModel(success: false, message: error.errorMessage);
@@ -184,28 +146,15 @@ class QRCodeController extends GetxController {
         _isSuccess.value = true;
         _isDownloading.value = false;
 
-        if (kDebugMode) {
-          print("success downloading QRCode");
-        }
-
-        if (kDebugMode) {
-          print("File downloaded at $filePath");
-        }
         return APIResponseModel(
             success: true, message: "Successfully Downloaded QR Code");
       } else {
-        if (kDebugMode) {
-          print("error downloading QRCode: ${response.statusCode}");
-        }
         _isDownloading.value = false;
         return APIResponseModel(
             success: false,
             message: response.statusMessage ?? "Error Downloading QRCode");
       }
     } on DioException catch (e) {
-      if (kDebugMode) {
-        print("error downloading QRCode: $e");
-      }
       _isDownloading.value = false;
       var error = ApiException.fromDioError(e);
       return APIResponseModel(success: false, message: error.errorMessage);
@@ -227,37 +176,23 @@ class QRCodeController extends GetxController {
           text: 'QR Code Image',
         );
         if (shareResult.status == ShareResultStatus.success) {
-          if (kDebugMode) {
-            print("success sharing QRCode");
-          }
-
           _isSharing.value = false;
 
           return APIResponseModel(
               success: true, message: "Successfully Shared QR Code");
         } else {
-          if (kDebugMode) {
-            print("error sharing QRCode: ${shareResult.status.toString()}");
-          }
-
           _isSharing.value = false;
           return APIResponseModel(
               success: false,
               message: response.statusMessage ?? "Error Sharing QRCode");
         }
       } else {
-        if (kDebugMode) {
-          print("error sharing QRCode: ${response.statusCode}");
-        }
         _isSharing.value = false;
         return APIResponseModel(
             success: false,
             message: response.statusMessage ?? "Error Sharing QRCode");
       }
     } on DioException catch (e) {
-      if (kDebugMode) {
-        print("error sharing QRCode: $e");
-      }
       _isSharing.value = false;
 
       var error = ApiException.fromDioError(e);

@@ -47,8 +47,7 @@ class _CreatQRCodePageState extends State<CreatQRCodePage> {
             "Please select a valid image that has a single human face",
             title: "Invalid Image");
       } else {
-        print("From CreateQR Code page :filename is $_fileName");
-        print("From CreateQR Code page :file path is $_filePath");
+       
         ImageQRCodeRequestModel imageQRCodeRequestModel =
             ImageQRCodeRequestModel(
           qrcode_type: selecteditems,
@@ -64,7 +63,7 @@ class _CreatQRCodePageState extends State<CreatQRCodePage> {
             await qrCodeController.createQrcode(imageQRCodeRequestModel);
 
         if (createResponse.success) {
-          print("From create page while creating: ${createResponse.message}");
+          
 
           qrcodeColorController.clear();
           linkController.clear();
@@ -73,7 +72,7 @@ class _CreatQRCodePageState extends State<CreatQRCodePage> {
               await qrCodeController.updateQrCode(qrCodeController.qrcode[0]);
 
           if (updateResponse.success) {
-            print("From create page while updating: ${updateResponse.message}");
+          
 
             showCustomSnackBar("Successfully Created QR Code",
                 backgroundColor: Colors.white,
@@ -82,11 +81,11 @@ class _CreatQRCodePageState extends State<CreatQRCodePage> {
                 title: "Success");
             Get.toNamed(AppRoutes.QRCODEGENERATED);
           } else {
-            print("From create page while updating: ${updateResponse.message}");
+            
             showCustomSnackBar(updateResponse.message);
           }
         } else {
-          print("From create page while creating: ${createResponse.message}");
+         
           showCustomSnackBar(createResponse.message);
         }
       }
@@ -101,8 +100,7 @@ class _CreatQRCodePageState extends State<CreatQRCodePage> {
         if (faces.length != 1) {
           // No or more than one face detected
 
-          print(
-              "...............FACE LENGTH IS : ${faces.length}.......................");
+         
           setState(() {
             _isValidImage = false;
           });
@@ -116,14 +114,11 @@ class _CreatQRCodePageState extends State<CreatQRCodePage> {
         // The image is valid with a single human face
         // Proceed with further operations
 
-        print("......IMAGE NAME IS: $_fileName....................");
-        print(".....IMAGE PATH IS  :$imagePath...................");
-
         setState(() {
           _isValidImage = true;
         });
       } catch (e) {
-        print('Error during face detection: $e');
+      
         setState(() {
           _isValidImage = false;
         });

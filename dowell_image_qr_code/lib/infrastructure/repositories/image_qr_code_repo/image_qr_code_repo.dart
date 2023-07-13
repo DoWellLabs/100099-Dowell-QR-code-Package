@@ -25,6 +25,7 @@ class ImageQRCodeRepository {
       Response response = await apiClient.post(
         "${ApiEndPoints.BASE_URL}/${ApiEndPoints.CREATE_QR_CODE_END_POINT}",
         qrCodeRequestModel,
+        queryParameters: queryParameters,
       );
       return response;
     } catch (e) {
@@ -32,11 +33,13 @@ class ImageQRCodeRepository {
     }
   }
 
-  Future<Response> updateQRCode(Qrcodes qrcode) async {
+  Future<Response> updateQRCode(Qrcodes qrcode,
+      {Map<String, dynamic>? queryParameters}) async {
     try {
       final response = await apiClient.put(
           "${ApiEndPoints.BASE_URL}${ApiEndPoints.UPDATE_QR_CODE_END_POINT}${qrcode.qrcodeId}/",
-          qrcode: qrcode);
+          qrcode: qrcode,
+          queryParameters: queryParameters);
       return response;
     } catch (e) {
       rethrow;
@@ -60,33 +63,6 @@ class ImageQRCodeRepository {
       return response;
     } catch (e) {
       rethrow;
-    }
-  }
-
-  Exception _handleError(dynamic error) {
-    print("...error from repo... $error");
-    if (error is DioException) {
-      final dioError = error as DioException;
-      String errorMessage;
-
-      if (dioError.response != null) {
-        final statusCode = dioError.response!.statusCode;
-        final responseData = dioError.response!.data;
-
-        if (statusCode == 401) {
-          errorMessage = 'Unauthorized';
-        } else if (statusCode == 404) {
-          errorMessage = 'Not found';
-        } else {
-          errorMessage = 'Request failed with status code $statusCode';
-        }
-      } else {
-        errorMessage = 'Network error occurred';
-      }
-
-      return Exception('API Error: $errorMessage');
-    } else {
-      return Exception('Unexpected error occurred.');
     }
   }
 }
