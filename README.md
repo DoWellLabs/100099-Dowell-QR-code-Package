@@ -49,7 +49,7 @@ Generating a QR Code:
     To generate a QR code, follow these steps:
 
     Step 1: Click the "Create QR Code" button:
-    !["Create QR Code"](dowell_image_qr_code/assets/images/image-2.png)
+    ![Create QR Code](dowell_image_qr_code/assets/images/image-2.png)
 
 
 
