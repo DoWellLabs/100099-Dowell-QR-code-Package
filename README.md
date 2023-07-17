@@ -3,7 +3,7 @@ Welcome to the documentation for Dowell Image QR Code app!
 Overview:
 Dowell Image QR Code app allows you to generate a QR code for an image that has exactly one human face. You can download or share the generated QR code with your friends, family, and other platforms. The app uses the GetX state management and Domain-Driven Design (DDD) architecture.
 
-![Splash Screen](dowell_image_qr_code\assets\images\image-6.png)
+![Splash Screen](dowell_image_qr_code/assets/images/image-6.png)
 
 Technologies:
 Dart
@@ -49,18 +49,18 @@ Generating a QR Code:
     To generate a QR code, follow these steps:
 
     Step 1: Click the "Create QR Code" button:
-    !["Create QR Code"](dowell_image_qr_code\assets\images\image-2.png)
+    !["Create QR Code"](dowell_image_qr_code/assets/images/image-2.png)
 
 
 
     Step 2: Select an Image:
         Select a valid image that has exactly one human face on it. You can choose an image from your device gallery or take a new picture with your camera.
 
-        ![Select Image Page](dowell_image_qr_code\assets\images\image.png)
+        ![Select Image Page](dowell_image_qr_code/assets/images/image.png)
 
     Step 3: Generate the QR Code:
         Click on the "Generate QR Code" button.
-        ![Generate QR Code](dowell_image_qr_code\assets\images\image-3.png)
+        ![Generate QR Code](dowell_image_qr_cod/assets/images/image-3.png)
          If the QR code is generated successfully, a new page will appear that shows the generated QR code with options to download or share the QR code. If an error occurs while generating the QR code, please check your internet connection and try again.
 
 Downloading the QR Code:
@@ -69,7 +69,7 @@ To download the QR code, follow these steps:
     Step 1: Go to the QR Code Page:
         After the QR code is generated successfully, you will be redirected to a new page that shows the generated QR code. Click on the "Download QR Code" button.
 
-        ![Download QR Code](dowell_image_qr_code\assets\images\image-4.png)
+        ![Download QR Code](dowell_image_qr_code/assets/images/image-4.png)
 
     Step 2: Save the QR Code:
         The QR code will be downloaded and saved to your device's gallery.
@@ -80,7 +80,7 @@ To share the QR code, follow these steps:
     Step 1: Go to the QR Code Page:
         After the QR code is generated successfully, you will be redirected to a new page that shows the generated QR code. Click on the "Share QR Code" button.
 
-        ![Share QR Code](dowell_image_qr_code\assets\images\image-4.png)
+        ![Share QR Code](dowell_image_qr_code/assets/images/image-4.png)
 
 
 
@@ -89,7 +89,7 @@ To share the QR code, follow these steps:
     Step 2: Select the Platform:
         Choose the platform where you want to share the QR code. You can choose from Telegram, Facebook, Email, WhatsApp, and other platforms.
 
-        ![Share QR Code](dowell_image_qr_code\assets\images\image-5.png)
+        ![Share QR Code](dowell_image_qr_code/assets/images/image-5.png)
 
     Step 3: Share the QR Code:
         After selecting the platform, you can share the QR code with an individual or a group on that platform.
