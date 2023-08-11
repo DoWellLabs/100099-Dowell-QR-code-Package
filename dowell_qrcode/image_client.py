@@ -55,7 +55,12 @@ class ImageClient(Client):
             ('logo', (image_name, image.bytes, 'application/octet-stream'))
         ]
         payload = self._prepare_payload(kwargs)
-        response = self.session_.post(api_get_url, data=payload, files=files)
+        response = self.session_.post(
+            url=api_get_url, 
+            data=payload, 
+            files=files, 
+            params={"api_key": self.api_key}
+        )
         if response.ok:
             response_data = response.json()['qrcodes']
             response_data = self._correct_response_data(response_data)
@@ -99,7 +104,11 @@ class ImageClient(Client):
         """
         data.update({"company_id": self.user_id})
         self._validate_payload(data, validate_with=ALLOWED_UPDATE_FIELDS)
-        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", json=data)
+        response = self.session_.put(
+            url=f"{api_put_url}/{qrcode_id}/", 
+            json=data,
+            params={"api_key": self.api_key}
+        )
 
         if not response.ok:
             raise QRCodeUpdateError(f"Error updating QR Code: reason: {response.text}")

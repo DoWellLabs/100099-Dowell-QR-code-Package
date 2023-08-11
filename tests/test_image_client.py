@@ -11,7 +11,7 @@ class TestImageClient(TestClient, unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        cls.client = ImageClient(username=cls.client_name, user_id=cls.client_id)
+        cls.client = ImageClient(username=cls.client_name, user_id=cls.client_id, api_key="")
         assert cls.client.username == cls.client_name
         assert cls.client.user_id == cls.client_id
 

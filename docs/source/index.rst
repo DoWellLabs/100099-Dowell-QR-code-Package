@@ -1,14 +1,6 @@
-.. dowell_qrcode documentation master file, created by
-   sphinx-quickstart on Mon Jul  3 14:25:22 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-📑 Dowell QR Code Generator Client Documentation
-=================================================
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
+Dowell QR Code Generator Client Documentation
+=============================================
 
 This is a python client for the Dowell QR Code Generator API. Uses API version 2.
 
@@ -30,7 +22,7 @@ To install a distribution of this package, do the following:
 
    git checkout DowellQRCodeClient-DanielAfolayan
 
-   pip install dist/dowell_qrcode-0.1.0-py3-none-any.whl
+   pip install dist/dowell_qrcode-0.2.0-py3-none-any.whl
 
 Quickstart
 ----------
@@ -47,7 +39,7 @@ To import the api client used to create QR codes for links, use the following co
    import dowell_qrcode
 
    # Create a client
-   client = dowell_qrcode.Client(username='Username', user_id="UserID")
+   client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 
    # Generate QR Code for a link
    result = client.generate_qrcode(obj='https://www.google.com', product_name='Google Link', qrcode_type='Link')
@@ -79,7 +71,7 @@ Generating QR codes for links is done using a different client from the one used
    import dowell_qrcode
 
    # Create a client
-   image_client = dowell_qrcode.ImageClient(username='Username', user_id="UserID")
+   image_client = dowell_qrcode.ImageClient(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 
    # Generate QR Code for an image
 
@@ -108,7 +100,7 @@ To get the details of an already existing QR code, use the following code:
 
    import dowell_qrcode
 
-   client = dowell_qrcode.Client(username='Username', user_id="UserID")
+   client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
    qrcode_image_url = client.get_qrcode(qrcode_id='QrCodeID')
    print(qrcode_image_url)
 
@@ -164,7 +156,7 @@ To download the QR code image, use the following code:
 
    import dowell_qrcode
 
-   client = dowell_qrcode.Client(username='Username', user_id="UserID")
+   client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
    qrcode_image_url = client.get_qrcode(qrcode_id='QrCodeID')
 
    # returns a FileHandler object
@@ -181,7 +173,7 @@ QR codes cannot be deleted. They can only be deactivated. To deactivate a QR cod
 .. code-block:: python
 
 
-   client = dowell_qrcode.Client(username='Username', user_id="UserID")
+   client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
    client.deactivate_qrcode(qrcode_id='QrCodeID')
 
    assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == False
@@ -194,7 +186,7 @@ To activate a QR code, use the following code:
 .. code-block:: python
 
 
-   client = dowell_qrcode.Client(username='Username', user_id="UserID")
+   client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
    client.activate_qrcode(qrcode_id='QrCodeID')
 
    assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == True
@@ -218,7 +210,7 @@ The ``Client`` Class
 The ``Client`` class is used to create a client object that can be used to interact with the API. Listed below are most of the objects attributes and methods:
 
 Instantiating the ``Client`` Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Creating an instance requires the ``username`` and ``user_id`` of the user.
 
@@ -227,7 +219,7 @@ Creating an instance requires the ``username`` and ``user_id`` of the user.
    import dowell_qrcode
 
    # Create a client
-   client = dowell_qrcode.Client(username='Username', user_id="UserID")
+   client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 
 Attributes
 ~~~~~~~~~~
@@ -237,6 +229,7 @@ The ``Client`` object has the following attributes:
 
 * ``username``\ : The username of the user
 * ``user_id``\ : The user id of the user
+* ``api_key``\ : Your Dowell API key.
 * ``session_``\ : The session object used to make requests to the API at the moment
 * ``user_agent``\ : The user agent used in ``client.session_`` headers
 
@@ -400,7 +393,7 @@ The ``ImageClient`` class is used to generate QR codes for images. It is a subcl
 For more information on the ``Client`` class, see the `Client Class <#the-client-class>`_ section.
 
 Instatiating the ``ImageClient`` Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instatiation works the same as the ``Client`` class.
 
@@ -409,7 +402,7 @@ Instatiation works the same as the ``Client`` class.
    import dowell_qrcode
 
    # Instatiate the ImageClient
-   image_client = dowell_qrcode.ImageClient(username='Username', user_id='UserID')
+   image_client = dowell_qrcode.ImageClient(username='Username', user_id='UserID', api_key="<your_dowell_api_key>")
 
 Modified Methods
 ~~~~~~~~~~~~~~~~
@@ -698,11 +691,3 @@ Dependencies
 * `opencv-python <https://pypi.org/project/opencv-python/>`_
 * `requests <https://pypi.org/project/requests/>`_
 * `bs4_web_scraper <https://pypi.org/project/bs4-web-scraper/>`_
-
-
-.. Indices and tables
-.. ==================
-
-.. * :ref:`genindex`
-.. * :ref:`modindex`
-.. * :ref:`search`

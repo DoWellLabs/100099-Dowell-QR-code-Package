@@ -11,7 +11,7 @@ from .image_client import ImageClient
 from .image import Image
 
 api_version = 'v2'
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 def get_api_status():
     """Get the status of Dowell QR Code Generator API"""

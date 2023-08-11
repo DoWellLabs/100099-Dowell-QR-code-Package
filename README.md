@@ -18,7 +18,7 @@ cd 100099-Dowell-QR-code-Package
 
 git checkout DowellQRCodeClient-DanielAfolayan
 
-pip install dist/dowell_qrcode-0.1.0-py3-none-any.whl
+pip install dist/dowell_qrcode-0.2.0-py3-none-any.whl
 
 ```
 
@@ -32,7 +32,7 @@ To import the api client used to create QR codes for links, use the following co
 import dowell_qrcode
 
 # Create a client
-client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 
 # Generate QR Code for a link
 result = client.generate_qrcode(obj='https://www.google.com', product_name='Google Link', qrcode_type='Link')
@@ -66,7 +66,7 @@ Generating QR codes for links is done using a different client from the one used
 import dowell_qrcode
 
 # Create a client
-image_client = dowell_qrcode.ImageClient(username='Username', user_id="UserID")
+image_client = dowell_qrcode.ImageClient(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 
 # Generate QR Code for an image
 
@@ -92,7 +92,7 @@ To get the details of an already existing QR code, use the following code:
 ```python
 import dowell_qrcode
 
-client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 qrcode_image_url = client.get_qrcode(qrcode_id='QrCodeID')
 print(qrcode_image_url)
 
@@ -146,7 +146,7 @@ To download the QR code image, use the following code:
 ```python
 import dowell_qrcode
 
-client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 qrcode_image_url = client.get_qrcode(qrcode_id='QrCodeID')
 
 # returns a FileHandler object
@@ -163,7 +163,7 @@ QR codes cannot be deleted. They can only be deactivated. To deactivate a QR cod
 
 ```python
 
-client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 client.deactivate_qrcode(qrcode_id='QrCodeID')
 
 assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == False
@@ -176,7 +176,7 @@ To activate a QR code, use the following code:
 
 ```python
 
-client = dowell_qrcode.Client(username='Username', user_id="UserID")
+client = dowell_qrcode.Client(username='Username', user_id="UserID", api_key="<your_dowell_api_key>")
 client.activate_qrcode(qrcode_id='QrCodeID')
 
 assert client.get_qrcode(qrcode_id='QrCodeID', verbose=True)['is_active'] == True

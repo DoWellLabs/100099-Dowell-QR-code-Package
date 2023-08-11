@@ -63,15 +63,19 @@ class Client:
     session_ = requests.Session()
     user_agent = get_new_user_agent()
 
-    def __init__(self, username: str, user_id: str):
+    def __init__(self, username: str, user_id: str, api_key: str):
         """
         Initialize class
 
         :param username (str): username of the user. Should be unique
         :param user_id (str): user id of the user. Should be unique
+        :param api_key (str): Dowell API key for the user
+
+        Visit https://ll05-ai-dowell.github.io/100105-DowellApiKeySystem/ to get your API key
         """
         self.username = username
         self.user_id = user_id
+        self.api_key = api_key
         self.session_.headers.update({"User-Agent": self.user_agent})
 
 
@@ -82,7 +86,7 @@ class Client:
 
         :return (dict): dictionary containing the status of the API and response code or text if API is unreachable
         """
-        resp = cls.session_.get(api_status_url)
+        resp = cls.session_.get(url=api_status_url)
         if resp.ok:
             status_resp = resp.json()
             status_resp.update({'status_code': resp.status_code})
@@ -189,7 +193,12 @@ class Client:
             ]
         
         payload = self._prepare_payload(kwargs)
-        response = self.session_.post(api_get_url, data=payload, files=files)
+        response = self.session_.post(
+            url=api_get_url, 
+            data=payload, 
+            files=files, 
+            params={"api_key": self.api_key}
+        )
         if logo_path:
             f.close()
 
@@ -257,7 +266,12 @@ class Client:
             ]
 
         self._validate_payload(data, validate_with=ALLOWED_UPDATE_FIELDS)
-        response = self.session_.put(f"{api_put_url}/{qrcode_id}/", data=data, files=files)
+        response = self.session_.put(
+            url=f"{api_put_url}/{qrcode_id}/", 
+            data=data, 
+            files=files, 
+            params={"api_key": self.api_key}
+        )
 
         if logo_path:
             f.close()
@@ -282,7 +296,10 @@ class Client:
         :raises QRCodeNotFoundError: if QR Code with `qrcode_id` is not found
         :raises QRCodeRetrievalError: if there is an error retrieving QR Code
         """
-        response = self.session_.get(f"{api_put_url}/{qrcode_id}/")
+        response = self.session_.get(
+            url=f"{api_put_url}/{qrcode_id}/",
+            params={"api_key": self.api_key}
+        )
         if not response.ok and response.status_code != 404:
             raise QRCodeRetrievalError(f"Error getting QR Code: reason: {response.text}")
 
@@ -302,7 +319,13 @@ class Client:
         :return (List[Dict[str, Any]]): list of QR Codes
         :raises QRCodeRetrievalError: if there is an error retrieving QR Codes
         """
-        response = self.session_.get(api_get_url, params={'company_id': self.user_id})
+        response = self.session_.get(
+            url=api_get_url, 
+            params={
+                'company_id': self.user_id,
+                "api_key": self.api_key,
+            }
+        )
         if not response.ok:
             raise QRCodeRetrievalError(f"Error getting QR Codes: reason: {response.text}")
         response_data = response.json()['response']['data']
